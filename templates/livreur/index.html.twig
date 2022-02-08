@@ -12,6 +12,7 @@
                 <th>Nom</th>
                 <th>Prenom</th>
                 <th>Telephone</th>
+                <th>Véhicule</th>
                 <th>Secteur</th>
                 <th>actions</th>
             </tr>
@@ -23,6 +24,7 @@
                 <td>{{ livreur.nom }}</td>
                 <td>{{ livreur.prenom }}</td>
                 <td>{{ livreur.telephone }}</td>
+                <td>{{ livreur.vehicule }}</td>
                 <td>{{ livreur.secteur }}</td>
                 <td>
                     <a href="{{ path('livreur_show', {'id': livreur.id}) }}">show</a>
