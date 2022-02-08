@@ -23,16 +23,16 @@ class LigneCommande
     private $quantite;
 
     /**
-     * @ORM\OneToOne(targetEntity=Plat::class, inversedBy="ligneCommande", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $plat;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Commande::class, inversedBy="ligneCommandes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $commande;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Plat::class, inversedBy="ligneCommandes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $plat;
 
     public function getId(): ?int
     {
@@ -51,18 +51,6 @@ class LigneCommande
         return $this;
     }
 
-    public function getPlat(): ?Plat
-    {
-        return $this->plat;
-    }
-
-    public function setPlat(Plat $plat): self
-    {
-        $this->plat = $plat;
-
-        return $this;
-    }
-
     public function getCommande(): ?Commande
     {
         return $this->commande;
@@ -71,6 +59,18 @@ class LigneCommande
     public function setCommande(?Commande $commande): self
     {
         $this->commande = $commande;
+
+        return $this;
+    }
+
+    public function getPlat(): ?Plat
+    {
+        return $this->plat;
+    }
+
+    public function setPlat(?Plat $plat): self
+    {
+        $this->plat = $plat;
 
         return $this;
     }
