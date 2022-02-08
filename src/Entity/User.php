@@ -42,27 +42,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $professionnel;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Restaurant::class, mappedBy="user")
-     */
-    private $restaurants;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Livreur::class, mappedBy="user")
-     */
-    private $livreurs;
+    private $professionnel;    
 
     /**
      * @ORM\OneToOne(targetEntity=Client::class, mappedBy="user", cascade={"persist", "remove"})
      */
     private $client;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Restaurant::class, mappedBy="proprietaire", cascade={"persist", "remove"})
+     */
+    private $restaurant;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Livreur::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $livreur;
+
     public function __construct()
     {
-        $this->restaurants = new ArrayCollection();
-        $this->livreurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -166,66 +164,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Restaurant[]
-     */
-    public function getRestaurants(): Collection
-    {
-        return $this->restaurants;
-    }
-
-    public function addRestaurant(Restaurant $restaurant): self
-    {
-        if (!$this->restaurants->contains($restaurant)) {
-            $this->restaurants[] = $restaurant;
-            $restaurant->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRestaurant(Restaurant $restaurant): self
-    {
-        if ($this->restaurants->removeElement($restaurant)) {
-            // set the owning side to null (unless already changed)
-            if ($restaurant->getUser() === $this) {
-                $restaurant->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Livreur[]
-     */
-    public function getLivreurs(): Collection
-    {
-        return $this->livreurs;
-    }
-
-    public function addLivreur(Livreur $livreur): self
-    {
-        if (!$this->livreurs->contains($livreur)) {
-            $this->livreurs[] = $livreur;
-            $livreur->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLivreur(Livreur $livreur): self
-    {
-        if ($this->livreurs->removeElement($livreur)) {
-            // set the owning side to null (unless already changed)
-            if ($livreur->getUser() === $this) {
-                $livreur->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getClient(): ?Client
     {
         return $this->client;
@@ -239,6 +177,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getRestaurant(): ?Restaurant
+    {
+        return $this->restaurant;
+    }
+
+    public function setRestaurant(Restaurant $restaurant): self
+    {
+        // set the owning side of the relation if necessary
+        if ($restaurant->getProprietaire() !== $this) {
+            $restaurant->setProprietaire($this);
+        }
+
+        $this->restaurant = $restaurant;
+
+        return $this;
+    }
+
+    public function getLivreur(): ?Livreur
+    {
+        return $this->livreur;
+    }
+
+    public function setLivreur(Livreur $livreur): self
+    {
+        // set the owning side of the relation if necessary
+        if ($livreur->getUser() !== $this) {
+            $livreur->setUser($this);
+        }
+
+        $this->livreur = $livreur;
 
         return $this;
     }

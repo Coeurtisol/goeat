@@ -39,7 +39,7 @@ class RestaurantController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
-            $restaurant->setUser($user);
+            $restaurant->setProprietaire($user);
             $entityManager->persist($restaurant);
             $entityManager->flush();
 
