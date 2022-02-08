@@ -38,15 +38,15 @@ class Livreur
     private $secteur;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="livreurs")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Vehicule::class, inversedBy="livreurs")
      */
     private $vehicule;
+
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, inversedBy="livreur", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     public function getId(): ?int
     {
@@ -101,18 +101,6 @@ class Livreur
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     public function getVehicule(): ?Vehicule
     {
         return $this->vehicule;
@@ -121,6 +109,18 @@ class Livreur
     public function setVehicule(?Vehicule $vehicule): self
     {
         $this->vehicule = $vehicule;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

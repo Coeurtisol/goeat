@@ -50,12 +50,6 @@ class Restaurant
     private $telephone;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="restaurants")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Type::class, inversedBy="restaurants")
      */
     private $type;
@@ -64,6 +58,12 @@ class Restaurant
      * @ORM\OneToMany(targetEntity=Plat::class, mappedBy="restaurant", orphanRemoval=true)
      */
     private $plats;
+
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, inversedBy="restaurant", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $proprietaire;
 
     public function __construct()
     {
@@ -147,18 +147,6 @@ class Restaurant
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     public function getType(): ?Type
     {
         return $this->type;
@@ -196,6 +184,18 @@ class Restaurant
                 $plat->setRestaurant(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getProprietaire(): ?User
+    {
+        return $this->proprietaire;
+    }
+
+    public function setProprietaire(User $proprietaire): self
+    {
+        $this->proprietaire = $proprietaire;
 
         return $this;
     }

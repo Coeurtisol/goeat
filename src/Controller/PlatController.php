@@ -38,7 +38,7 @@ class PlatController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {            
             $user = $this->getUser();
-            $plat->setRestaurant($user->getRestaurants()[0]);
+            $plat->setRestaurant($user->getRestaurant());
             $entityManager->persist($plat);
             $entityManager->flush();
 
