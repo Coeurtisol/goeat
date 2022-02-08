@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Go Eat
+{% endblock %}
+
+{% block body %}
+
+	{% for restaurant in restaurants %}
+		<ul>
+			<li>{{ restaurant.raisonSociale }}</li>
+			<li>{{ restaurant.rue }}</li>
+			<li>{{ restaurant.ville }}</li>
+			<li>{{ restaurant.codePostal }}</li>
+			<li>{{ restaurant.complement }}</li>
+			<li>{{ restaurant.telephone }}</li>
+		</ul>
+	{% endfor %}
+
+
+{% endblock %}

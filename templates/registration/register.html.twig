@@ -11,7 +11,12 @@
             label: 'Password'
         }) }}
         {{ form_row(registrationForm.professionnel)}}
+
+        
+    {% if registrationForm.professionnel != false %}
         {{ form_row(registrationForm.roles)}}
+    {% endif %}
+
 
         <button type="submit" class="btn">Register</button>
     {{ form_end(registrationForm) }}
