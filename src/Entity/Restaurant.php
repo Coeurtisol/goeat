@@ -65,6 +65,11 @@ class Restaurant
      */
     private $proprietaire;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Commande::class, mappedBy="restaurant", cascade={"persist", "remove"})
+     */
+    private $commande;
+
     public function __construct()
     {
         $this->plats = new ArrayCollection();
@@ -196,6 +201,23 @@ class Restaurant
     public function setProprietaire(User $proprietaire): self
     {
         $this->proprietaire = $proprietaire;
+
+        return $this;
+    }
+
+    public function getCommande(): ?Commande
+    {
+        return $this->commande;
+    }
+
+    public function setCommande(Commande $commande): self
+    {
+        // set the owning side of the relation if necessary
+        if ($commande->getRestaurant() !== $this) {
+            $commande->setRestaurant($this);
+        }
+
+        $this->commande = $commande;
 
         return $this;
     }
