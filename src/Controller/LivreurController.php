@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Api\VilleApi;
 use App\Entity\Livreur;
 use App\Form\LivreurType;
 use App\Repository\LivreurRepository;
@@ -32,6 +33,7 @@ class LivreurController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $livreur = new Livreur();
+        $villes = VilleApi::getVilles();
         $form = $this->createForm(LivreurType::class, $livreur);
         $form->handleRequest($request);
 
@@ -47,6 +49,7 @@ class LivreurController extends AbstractController
         return $this->renderForm('livreur/new.html.twig', [
             'livreur' => $livreur,
             'form' => $form,
+            'villes' => $villes,
         ]);
     }
 
@@ -65,6 +68,7 @@ class LivreurController extends AbstractController
      */
     public function edit(Request $request, Livreur $livreur, EntityManagerInterface $entityManager): Response
     {
+        $villes = VilleApi::getVilles();
         $form = $this->createForm(LivreurType::class, $livreur);
         $form->handleRequest($request);
 
@@ -77,6 +81,7 @@ class LivreurController extends AbstractController
         return $this->renderForm('livreur/edit.html.twig', [
             'livreur' => $livreur,
             'form' => $form,
+            'villes' => $villes,
         ]);
     }
 
@@ -85,7 +90,7 @@ class LivreurController extends AbstractController
      */
     public function delete(Request $request, Livreur $livreur, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$livreur->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $livreur->getId(), $request->request->get('_token'))) {
             $entityManager->remove($livreur);
             $entityManager->flush();
         }

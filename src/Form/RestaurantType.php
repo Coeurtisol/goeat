@@ -14,7 +14,9 @@ class RestaurantType extends AbstractType
         $builder
             ->add('raisonSociale')
             ->add('rue')
-            ->add('ville')
+            ->add('ville', null, [
+                'attr' => ['list' => 'listeville']
+            ])
             ->add('codePostal')
             ->add('complement')
             ->add('telephone')
