@@ -53,6 +53,11 @@ class Restaurant
      */
     private $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Type::class, inversedBy="restaurants")
+     */
+    private $type;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -138,6 +143,18 @@ class Restaurant
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function setType(?Type $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

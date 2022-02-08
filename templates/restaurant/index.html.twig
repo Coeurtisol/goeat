@@ -15,6 +15,7 @@
                 <th>CodePostal</th>
                 <th>Complement</th>
                 <th>Telephone</th>
+                <th>Type</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -28,6 +29,7 @@
                 <td>{{ restaurant.codePostal }}</td>
                 <td>{{ restaurant.complement }}</td>
                 <td>{{ restaurant.telephone }}</td>
+                <td>{{ restaurant.type }}</td>
                 <td>
                     <a href="{{ path('restaurant_show', {'id': restaurant.id}) }}">show</a>
                     <a href="{{ path('restaurant_edit', {'id': restaurant.id}) }}">edit</a>
