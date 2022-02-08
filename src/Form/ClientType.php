@@ -16,7 +16,9 @@ class ClientType extends AbstractType
             ->add('prenom')
             ->add('rue')
             ->add('complement')
-            ->add('ville')
+            ->add('ville', null, [
+                'attr' => ['list' => 'listeville']
+            ])
             ->add('telephone')
             ->add('codePostal')
         ;
