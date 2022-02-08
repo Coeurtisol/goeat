@@ -44,7 +44,7 @@ class RegistrationFormType extends AbstractType
             ->add('roles', ChoiceType::class, [
                 'mapped' => false,
                 'choices'  => [
-                    'Restorateur' => 'ROLE_RESTORATEUR',
+                    'Restaurateur' => 'ROLE_RESTAURATEUR',
                     'Livreur' => 'ROLE_LIVREUR',
                 ]
             ])
