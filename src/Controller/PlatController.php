@@ -39,6 +39,11 @@ class PlatController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {            
             $user = $this->getUser();
             $plat->setRestaurant($user->getRestaurant());
+
+            $file = $form['photo']->getData();
+            $file->move($this->getParameter('plat_image'),$file->getClientOriginalName());
+
+            $plat->setPhoto($file->getClientOriginalName());
             $entityManager->persist($plat);
             $entityManager->flush();
 
