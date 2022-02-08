@@ -49,9 +49,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $restaurants;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Livreur::class, mappedBy="user")
+     */
+    private $livreurs;
+
     public function __construct()
     {
         $this->restaurants = new ArrayCollection();
+        $this->livreurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -179,6 +185,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($restaurant->getUser() === $this) {
                 $restaurant->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Livreur[]
+     */
+    public function getLivreurs(): Collection
+    {
+        return $this->livreurs;
+    }
+
+    public function addLivreur(Livreur $livreur): self
+    {
+        if (!$this->livreurs->contains($livreur)) {
+            $this->livreurs[] = $livreur;
+            $livreur->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLivreur(Livreur $livreur): self
+    {
+        if ($this->livreurs->removeElement($livreur)) {
+            // set the owning side to null (unless already changed)
+            if ($livreur->getUser() === $this) {
+                $livreur->setUser(null);
             }
         }
 
