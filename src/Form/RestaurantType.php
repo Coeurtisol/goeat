@@ -18,6 +18,7 @@ class RestaurantType extends AbstractType
             ->add('codePostal')
             ->add('complement')
             ->add('telephone')
+            ->add('type')
         ;
     }
 
