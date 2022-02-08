@@ -1,19 +1,105 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		<link
+		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+		{% block stylesheets %}
+			{# {{ encore_entry_link_tags('app') }} #}
+		{% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+		{% block javascripts %}
+			{# {{ encore_entry_script_tags('app') }} #}
+		{% endblock %}
+	</head>
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+
+		}
+		h1 {
+			color: white;
+			cursor: pointer;
+		}
+		header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 30px 10%;
+			background-color: #24252A;
+			font-family: roboto, sans serif;
+		}
+		.navbar a {
+			font-weight: 500;
+			font-size: 16px;
+			color: #edf0f1;
+			text-decoration: none;
+		}
+		.navbar button {
+			font-weight: 500;
+			font-size: 16px;
+			color: #edf0f1;
+			text-decoration: none;
+		}
+
+		.nav_links li {
+			display: inline-block;
+			padding: 0 20px;
+		}
+		.nav_links li a {
+			transition: all 0.3s ease 0s;
+		}
+		.nav_links li a:hover {
+			color: #0088a9
+		}
+		.navbar button {
+			padding: 9px 25px;
+			background-color: rgba(0, 136, 169, 1);
+			border: none;
+			border-radius: 50px;
+			cursor: pointer;
+			transition: all 0.3s ease 0s;
+		}
+		.navbar button:hover {
+			background-color: rgba(0, 136, 169, 0.8);
+		}
+	</style>
+	<body>
+		{% block nav %}
+			<header class="navbar">
+				<h1 href="{{path('home')}}">Go Eat</h1>
+				<nav>
+					<ul class="nav_links">
+						<li>
+							<a href="{{path('home')}}">Nos plats</a>
+						</li>
+					</ul>
+				</nav>
+				<div>
+
+					{% if app.user %}
+						<button>
+							<a href="{{path('app_logout')}}" class="btnDeconnexion">Déconnexion</a>
+						</button>
+					{% else %}
+						<button>
+							<a href="{{path('app_login')}}" class="btnConnexion">Connexion</a>
+						</button>
+						<button>
+							<a href="{{path('app_register')}}" class="btnInscription">Inscrption</a>
+						</button>
+					{% endif %}
+
+				</div>
+			</header>
+		{% endblock %}
+		{% block body %}{% endblock %}
+	</body>
 </html>
