@@ -27,6 +27,7 @@ class RestaurantController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_RESTAURATEUR")
      * @Route("/new", name="restaurant_new", methods={"GET", "POST"})
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -61,6 +62,7 @@ class RestaurantController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_RESTAURATEUR") 
      * @Route("/{id}/edit", name="restaurant_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Restaurant $restaurant, EntityManagerInterface $entityManager): Response
@@ -81,6 +83,7 @@ class RestaurantController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_RESTAURATEUR") 
      * @Route("/{id}", name="restaurant_delete", methods={"POST"})
      */
     public function delete(Request $request, Restaurant $restaurant, EntityManagerInterface $entityManager): Response
