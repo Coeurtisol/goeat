@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PlatRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -49,9 +51,14 @@ class Plat
     private $restaurant;
 
     /**
-     * @ORM\OneToOne(targetEntity=LigneCommande::class, mappedBy="plat", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=LigneCommande::class, mappedBy="plat", orphanRemoval=true)
      */
-    private $ligneCommande;
+    private $ligneCommandes;
+
+    public function __construct()
+    {
+        $this->ligneCommandes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -135,14 +142,32 @@ class Plat
         return $this->ligneCommande;
     }
 
-    public function setLigneCommande(LigneCommande $ligneCommande): self
+    /**
+     * @return Collection|LigneCommande[]
+     */
+    public function getLigneCommandes(): Collection
     {
-        // set the owning side of the relation if necessary
-        if ($ligneCommande->getPlat() !== $this) {
+        return $this->ligneCommandes;
+    }
+
+    public function addLigneCommande(LigneCommande $ligneCommande): self
+    {
+        if (!$this->ligneCommandes->contains($ligneCommande)) {
+            $this->ligneCommandes[] = $ligneCommande;
             $ligneCommande->setPlat($this);
         }
 
-        $this->ligneCommande = $ligneCommande;
+        return $this;
+    }
+
+    public function removeLigneCommande(LigneCommande $ligneCommande): self
+    {
+        if ($this->ligneCommandes->removeElement($ligneCommande)) {
+            // set the owning side to null (unless already changed)
+            if ($ligneCommande->getPlat() === $this) {
+                $ligneCommande->setPlat(null);
+            }
+        }
 
         return $this;
     }
