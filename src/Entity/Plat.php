@@ -48,6 +48,11 @@ class Plat
      */
     private $restaurant;
 
+    /**
+     * @ORM\OneToOne(targetEntity=LigneCommande::class, mappedBy="plat", cascade={"persist", "remove"})
+     */
+    private $ligneCommande;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +126,23 @@ class Plat
     public function setRestaurant(?Restaurant $restaurant): self
     {
         $this->restaurant = $restaurant;
+
+        return $this;
+    }
+
+    public function getLigneCommande(): ?LigneCommande
+    {
+        return $this->ligneCommande;
+    }
+
+    public function setLigneCommande(LigneCommande $ligneCommande): self
+    {
+        // set the owning side of the relation if necessary
+        if ($ligneCommande->getPlat() !== $this) {
+            $ligneCommande->setPlat($this);
+        }
+
+        $this->ligneCommande = $ligneCommande;
 
         return $this;
     }
