@@ -16,6 +16,7 @@ class LivreurType extends AbstractType
             ->add('prenom')
             ->add('telephone')
             ->add('secteur')
+            ->add('vehicule')
         ;
     }
 

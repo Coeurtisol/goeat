@@ -43,6 +43,11 @@ class Livreur
      */
     private $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Vehicule::class, inversedBy="livreurs")
+     */
+    private $vehicule;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +109,18 @@ class Livreur
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getVehicule(): ?Vehicule
+    {
+        return $this->vehicule;
+    }
+
+    public function setVehicule(?Vehicule $vehicule): self
+    {
+        $this->vehicule = $vehicule;
 
         return $this;
     }
