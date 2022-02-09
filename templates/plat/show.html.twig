@@ -71,7 +71,7 @@
     <div class="textePlat">
     <span class="nom">{{ plat.nom }}</span>
     <span class="description"> {{plat.description}}</span>
-    <span class="prix">{{plat.prix}} €</span>
+    <span class="prix">{{plat.prix / 100}} â‚¬</span>
     
  <a href="{{ path('ajouter_plat',{'id': plat.id}) }}">
  Commander

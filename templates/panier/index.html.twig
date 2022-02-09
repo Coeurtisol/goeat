@@ -84,7 +84,7 @@ border: 1px black solid;
 
 			    <img src="{{asset("images/plat/"~ plat.plat.photo)}}">
 				<span class="nom">{{plat.plat.nom}}</span>
-				<span class="prix">{{plat.plat.prix}} €</span>
+				<span class="prix">{{plat.plat.prix / 100}} €</span>
 				<span class="quantite">x{{plat.quantite}}</span>
 
 				<a href="{{ path('retirer_plat', {'id': plat.plat.id}) }}">✖</a>
@@ -96,7 +96,7 @@ border: 1px black solid;
 				{% endfor %}
 
 				<li class="totalPanier">
-				Total : XXX �
+				{{total / 100}} €
 				</li>
 
 				<button>COMMANDER</button>

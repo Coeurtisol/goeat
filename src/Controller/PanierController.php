@@ -32,7 +32,17 @@ class PanierController extends AbstractController
             ];
         }
 
-        return $this->render('panier/index.html.twig', ["plats" => $panierWhithData]);
+        $total=0;
+
+        foreach ($panierWhithData as $item) {
+            $totalByPlat=$item['plat']->getPrix() * $item['quantite'];
+            $total+= $totalByPlat;
+        }
+
+        return $this->render('panier/index.html.twig', [
+            "plats" => $panierWhithData,
+            "total" => $total
+        ]);
     }
 
     /**
