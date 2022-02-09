@@ -22,6 +22,11 @@ class LivreurController extends AbstractController
      */
     public function index(LivreurRepository $livreurRepository): Response
     {
+        $user = $this->getUser();
+        if ($user && !$user->getLivreur()) {
+            return $this->redirectToRoute('livreur_new');
+        }
+
         return $this->render('livreur/index.html.twig', [
             'livreurs' => $livreurRepository->findAll(),
         ]);
