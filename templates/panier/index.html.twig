@@ -19,7 +19,7 @@
 				{% for plat in plats %}
 					<tr>
 						<td>{{plat.plat.nom}}</td>
-						<td>{{plat.plat.prix}}</td>
+						<td>{{plat.plat.prix / 100}}</td>
 						<td>{{plat.quantite}}</td>
 						<td>
 							<a href="{{ path('retirer_plat', {'id': plat.plat.id}) }}">retirer</a>
