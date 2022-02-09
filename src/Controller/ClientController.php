@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Api\VilleApi;
 use App\Entity\Client;
 use App\Form\ClientType;
 use App\Repository\ClientRepository;
@@ -32,6 +33,7 @@ class ClientController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $client = new Client();
+        $villes = VilleApi::getVilles();
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
 
@@ -47,6 +49,7 @@ class ClientController extends AbstractController
         return $this->renderForm('client/new.html.twig', [
             'client' => $client,
             'form' => $form,
+            'villes' => $villes,
         ]);
     }
 
@@ -67,6 +70,7 @@ class ClientController extends AbstractController
     {
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
+        $villes = VilleApi::getVilles();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -77,6 +81,7 @@ class ClientController extends AbstractController
         return $this->renderForm('client/edit.html.twig', [
             'client' => $client,
             'form' => $form,
+            'villes' => $villes,
         ]);
     }
 

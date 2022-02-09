@@ -6,6 +6,11 @@
     <h1>Edit Restaurant</h1>
 
     {{ include('restaurant/_form.html.twig', {'button_label': 'Update'}) }}
+	<datalist id="listeville">
+		{% for ville in villes %}
+			<option value="{{ville.nom}}">{{ville.nom}}</option>
+		{% endfor %}
+	</datalist>
 
     <a href="{{ path('restaurant_index') }}">back to list</a>
 

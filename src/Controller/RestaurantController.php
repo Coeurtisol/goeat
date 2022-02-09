@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Api\VilleApi;
+use App\Entity\Client;
 use App\Entity\Restaurant;
 use App\Form\RestaurantType;
 use App\Repository\RestaurantRepository;
@@ -34,6 +36,7 @@ class RestaurantController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $restaurant = new Restaurant();
+        $villes = VilleApi::getVilles();
         $form = $this->createForm(RestaurantType::class, $restaurant);
         $form->handleRequest($request);
 
@@ -49,6 +52,7 @@ class RestaurantController extends AbstractController
         return $this->renderForm('restaurant/new.html.twig', [
             'restaurant' => $restaurant,
             'form' => $form,
+            'villes' => $villes,
         ]);
     }
 
@@ -70,6 +74,7 @@ class RestaurantController extends AbstractController
     {
         $form = $this->createForm(RestaurantType::class, $restaurant);
         $form->handleRequest($request);
+        $villes = VilleApi::getVilles();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -80,6 +85,7 @@ class RestaurantController extends AbstractController
         return $this->renderForm('restaurant/edit.html.twig', [
             'restaurant' => $restaurant,
             'form' => $form,
+            'villes' => $villes,
         ]);
     }
 

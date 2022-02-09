@@ -36,6 +36,9 @@ class CommandeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $client = $this->getUser()->getClient();
+            $commande->setClient($client);
+            $commande->setDate(new \DateTime());
             $entityManager->persist($commande);
             $entityManager->flush();
 
@@ -83,7 +86,7 @@ class CommandeController extends AbstractController
      */
     public function delete(Request $request, Commande $commande, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$commande->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $commande->getId(), $request->request->get('_token'))) {
             $entityManager->remove($commande);
             $entityManager->flush();
         }
