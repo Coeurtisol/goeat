@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PanierController!{% endblock %}
+
+{% block body %}
+
+
+	{% if plats | length > 0 %}
+		<table>
+			<thead>
+				<tr>
+					<th>Plat</th>
+					<th>Prix</th>
+					<th>Quantite</th>
+				</tr>
+
+			</thead>
+			<tbody>
+				{% for plat in plats %}
+					<tr>
+						<td>{{plat.plat.nom}}</td>
+						<td>{{plat.plat.prix}}</td>
+						<td>{{plat.quantite}}</td>
+						<td>
+							<a href="{{ path('retirer_plat', {'id': plat.plat.id}) }}">retirer</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<div>le panier est vide</div>
+	{% endif %}
+{% endblock %}
