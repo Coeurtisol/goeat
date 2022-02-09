@@ -38,6 +38,11 @@ class CommandeController extends AbstractController
     {
         $commande = new Commande();
 
+        if(!$session->has('panier'))
+        {
+            $session->set('panier', []);
+        }
+
         $panier = $session->get('panier');
         $panierWhithData = [];
 
@@ -60,13 +65,13 @@ class CommandeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $client = $this->getUser()->getClient();
-            $restaurant = $restaurantRepository->find($panierWhithData[0]['plat']->getId());
+            $restaurant = $restaurantRepository->find($panierWhithData[0]['plat']->getRestaurant()->getId());
             $commande->setNumero(rand(0, 1000000));
             $commande->setMontant($total);
             $commande->setClient($client);
             $commande->setDate(new \DateTime());
             $commande->setRestaurant($restaurant);
-            $commande->setStatut($statutRepository->find(1));
+            $commande->setStatut($statutRepository->findOneBy(['nom'=>'en attente']));
 
             $entityManager->persist($commande);
             $entityManager->flush();
