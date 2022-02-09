@@ -3,12 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Commande;
+use App\Entity\LigneCommande;
 use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
+use App\Repository\PlatRepository;
+use App\Repository\RestaurantRepository;
+use App\Repository\StatutCommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -29,18 +34,53 @@ class CommandeController extends AbstractController
     /**
      * @Route("/new", name="commande_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SessionInterface $session, PlatRepository $platRepository, RestaurantRepository $restaurantRepository, StatutCommandeRepository $statutRepository): Response
     {
         $commande = new Commande();
+
+        $panier = $session->get('panier');
+        $panierWhithData = [];
+
+        foreach ($panier as $id => $quantite) {
+            $panierWhithData[] = [
+                'plat' => $platRepository->find($id),
+                'quantite' => $quantite
+            ];
+        }
+
+        $total=0;
+
+        foreach ($panierWhithData as $item) {
+            $totalByPlat=$item['plat']->getPrix() * $item['quantite'];
+            $total+= $totalByPlat;
+        }
+
         $form = $this->createForm(CommandeType::class, $commande);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $client = $this->getUser()->getClient();
+            $restaurant = $restaurantRepository->find($panierWhithData[0]['plat']->getId());
+            $commande->setNumero(rand(0, 1000000));
+            $commande->setMontant($total);
             $commande->setClient($client);
             $commande->setDate(new \DateTime());
+            $commande->setRestaurant($restaurant);
+            $commande->setStatut($statutRepository->find(1));
+
             $entityManager->persist($commande);
             $entityManager->flush();
+            foreach ($panierWhithData as $plat) {
+                $ligneCommande = new LigneCommande();
+                $ligneCommande->setCommande($commande);
+                $ligneCommande->setPlat($plat['plat']);
+                $ligneCommande->setQuantite($plat['quantite']);
+
+                $entityManager->persist($ligneCommande);
+                $entityManager->flush();
+            }
+
+            $session->set('panier', []);
 
             return $this->redirectToRoute('commande_index', [], Response::HTTP_SEE_OTHER);
         }

@@ -18,4 +18,20 @@ class HomeController extends AbstractController
             'restaurants' => $restaurantRepository->findAll(),
         ]);
     }
+
+    /**
+     * @Route("/accueil", name="accueil")
+     */
+    public function accueil(): Response
+    {
+        $user = $this->getUser();
+        if ($user && $user->getRoles()[0] == "ROLE_RESTAURATEUR") {
+            return $this->redirectToRoute('restaurant_index');
+        }
+        if ($user && $user->getRoles()[0] == "ROLE_LIVREUR") {
+            return $this->redirectToRoute('livreur_index');
+        }
+
+        return $this->redirectToRoute('home');
+    }
 }
