@@ -65,11 +65,6 @@ class Commande
      */
     private $client;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Restaurant::class, inversedBy="commande", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $restaurant;
 
     /**
      * @ORM\OneToMany(targetEntity=LigneCommande::class, mappedBy="commande")
@@ -81,6 +76,12 @@ class Commande
      * @ORM\JoinColumn(nullable=false)
      */
     private $statut;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Restaurant::class, inversedBy="commandes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $restaurant;
 
     public function __construct()
     {
@@ -200,18 +201,6 @@ class Commande
         return $this;
     }
 
-    public function getRestaurant(): ?Restaurant
-    {
-        return $this->restaurant;
-    }
-
-    public function setRestaurant(Restaurant $restaurant): self
-    {
-        $this->restaurant = $restaurant;
-
-        return $this;
-    }
-
     /**
      * @return Collection|LigneCommande[]
      */
@@ -250,6 +239,18 @@ class Commande
     public function setStatut(?StatutCommande $statut): self
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getRestaurant(): ?Restaurant
+    {
+        return $this->restaurant;
+    }
+
+    public function setRestaurant(?Restaurant $restaurant): self
+    {
+        $this->restaurant = $restaurant;
 
         return $this;
     }

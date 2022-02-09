@@ -66,13 +66,15 @@ class Restaurant
     private $proprietaire;
 
     /**
-     * @ORM\OneToOne(targetEntity=Commande::class, mappedBy="restaurant", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Commande::class, mappedBy="restaurant", orphanRemoval=true)
      */
-    private $commande;
+    private $commandes;
+
 
     public function __construct()
     {
         $this->plats = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -205,19 +207,32 @@ class Restaurant
         return $this;
     }
 
-    public function getCommande(): ?Commande
+    /**
+     * @return Collection|Commande[]
+     */
+    public function getCommandes(): Collection
     {
-        return $this->commande;
+        return $this->commandes;
     }
 
-    public function setCommande(Commande $commande): self
+    public function addCommande(Commande $commande): self
     {
-        // set the owning side of the relation if necessary
-        if ($commande->getRestaurant() !== $this) {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
             $commande->setRestaurant($this);
         }
 
-        $this->commande = $commande;
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getRestaurant() === $this) {
+                $commande->setRestaurant(null);
+            }
+        }
 
         return $this;
     }

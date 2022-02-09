@@ -16,8 +16,13 @@ class PanierController extends AbstractController
      */
     public function validerCommande(SessionInterface $session, PlatRepository $platRepository)
     {
+        if(!$session->has('panier'))
+        {
+            $session->set('panier', []);
+        }
 
         $panier = $session->get('panier');
+
         $panierWhithData = [];
 
         foreach ($panier as $id => $quantite) {
