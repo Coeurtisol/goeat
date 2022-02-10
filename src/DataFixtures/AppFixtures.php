@@ -25,7 +25,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         // Remplissage des tables "statiques"
-        $statutscommandes = array("an attente", "acceptée", "prête", "prise en charge par le livreur", "livrée");
+        $statutscommandes = array("en attente", "acceptée", "prête", "prise en charge par le livreur", "livrée");
         foreach ($statutscommandes as $s) {
             $statutscommande = new StatutCommande();
             $statutscommande->setNom($s);
