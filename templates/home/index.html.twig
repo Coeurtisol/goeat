@@ -4,19 +4,65 @@
 {% endblock %}
 
 {% block body %}
-	<ul class="restaurateur">
-		{% for restaurant in restaurants %}
-			<li class="unRestau">
-				<div class="vitrine"><img></div>
-				<div class="detail">
-					<span class="titleRestau">{{ restaurant.raisonSociale }}</span>
-					<button> <a href="{{path('restaurant_show', {'id':restaurant.id}) }}">Afficher la carte</a></button>
-				</div>
-			</li>
-		{% endfor %}
-	</ul>
+	<div class="searchBar-container"><input type="text" id="searchBar" placeholder="Ville, type, restaurant"></div>
+	<ul class="restaurateur" id="restaurateur"></ul>
+	{% set listerestaurants = [] %}
+	{% for r in restaurants %}
+		{% set listerestaurants = listerestaurants | merge([{id: r.id, raisonSociale: r.raisonSociale, ville:r.ville ,type: r.type ? r.type.nom}]) %}
+	{% endfor %}
+	<input type="hidden" data-restaurants="{{ listerestaurants|json_encode }}">
+
+	<script>
+		const searchBar = document.getElementById('searchBar');
+		const restaurateursContainer = document.getElementById('restaurateur');
+		const restaurants = JSON.parse(document.querySelector('[data-restaurants]').dataset.restaurants);
+		console.log(restaurants);
+
+		searchBar.addEventListener('keyup',()=>afficherRestaurants(restaurants));
+		
+		function filtrerRestaurants(){
+			restaurateursContainer.innerHTML = '';
+			const value = searchBar.value;
+			console.log(value);
+
+			return restaurants.filter(r=>
+				r.raisonSociale.toLowerCase().includes(value.toLowerCase()) ||
+				r.ville.toLowerCase().includes(value.toLowerCase()) ||
+				r.type.toLowerCase().includes(value.toLowerCase())
+			);
+		}
+
+		function afficherRestaurants(restaurants){
+			filtrerRestaurants(restaurants).forEach(r=>{
+				const idRestaurant = r.id;
+				let url = '{{path('restaurant_show', {'id':'idRestaurant'}) }}';
+				url = url.replace("idRestaurant", idRestaurant);
+				const newRestaurant = `
+				<li class="unRestau">
+					<div class="vitrine"><img></div>
+					<div class="detail">
+						<span class="titleRestau">${r.raisonSociale}</span>
+						<button> <a href="${url}">Afficher la carte</a></button>
+					</div>
+				</li>`;
+				restaurateursContainer.insertAdjacentHTML('beforeend',newRestaurant);
+			});
+		}
+
+		afficherRestaurants(restaurants);
+	</script>
 
 	<style>
+		.searchBar-container{
+			width: fit-content;
+			margin: 1em auto;
+		}
+		.searchBar-container input{
+			font-size: 2em;
+			padding: 0.5em;
+			border-radius: 1em;
+			text-align: center;
+		}
 		.restaurateur {
 			width: 80%;
 			margin: 50px auto;
