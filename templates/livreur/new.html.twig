@@ -2,6 +2,10 @@
 
 {% block title %}Go Eat - Pannel livreur{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form/livreur.css') }}">
+{% endblock %}
+
 {% block body %}
 
 	{{ include('livreur/_form.html.twig', {'villes': villes}) }}

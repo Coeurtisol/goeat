@@ -2,6 +2,10 @@
 
 {% block title %}Modification compte restaurant{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form/restaurant.css') }}">
+{% endblock %}
+
 {% block body %}
 
     {{ include('restaurant/_form.html.twig', {'button_label': 'Update'}) }}
