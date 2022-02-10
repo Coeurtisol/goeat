@@ -80,6 +80,7 @@ class CommandeController extends AbstractController
                 $ligneCommande->setCommande($commande);
                 $ligneCommande->setPlat($plat['plat']);
                 $ligneCommande->setQuantite($plat['quantite']);
+                $plat['plat']->setStock($plat['plat']->getStock()-$plat['quantite']);
 
                 $entityManager->persist($ligneCommande);
                 $entityManager->flush();
@@ -87,7 +88,7 @@ class CommandeController extends AbstractController
 
             $session->set('panier', []);
 
-            return $this->redirectToRoute('commande_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('commande_merci', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('commande/new.html.twig', [
@@ -97,7 +98,7 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="commande_show", methods={"GET"})
+     * @Route("/{id<\d+>}", name="commande_show", methods={"GET"})
      */
     public function show(Commande $commande): Response
     {
@@ -107,7 +108,7 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="commande_edit", methods={"GET", "POST"})
+     * @Route("/{id<\d+>}/edit", name="commande_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Commande $commande, EntityManagerInterface $entityManager): Response
     {
@@ -127,7 +128,7 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="commande_delete", methods={"POST"})
+     * @Route("/{id<\d+>}", name="commande_delete", methods={"POST"})
      */
     public function delete(Request $request, Commande $commande, EntityManagerInterface $entityManager): Response
     {
@@ -137,5 +138,15 @@ class CommandeController extends AbstractController
         }
 
         return $this->redirectToRoute('commande_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/merci", name="commande_merci", methods={"GET"})
+     */
+    public function merci(CommandeRepository $commandeRepository): Response
+    {
+        return $this->render('commande/merci.html.twig', [
+            'commandes' => $commandeRepository->findAll(),
+        ]);
     }
 }
