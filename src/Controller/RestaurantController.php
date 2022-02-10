@@ -6,7 +6,9 @@ use App\Api\VilleApi;
 use App\Entity\Client;
 use App\Entity\Restaurant;
 use App\Form\RestaurantType;
+use App\Repository\CommandeRepository;
 use App\Repository\RestaurantRepository;
+use App\Repository\StatutCommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -22,7 +24,7 @@ class RestaurantController extends AbstractController
     /**
      * @Route("/mon-compte", name="restaurant_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(CommandeRepository $commandeRepository): Response
     {
         $user = $this->getUser();
         if ($user && !$user->getRestaurant()) {
@@ -30,10 +32,32 @@ class RestaurantController extends AbstractController
         }
 
         $restaurant = $user->getRestaurant();
+        // $commandes = $commandeRepository->findByStatutBySecteurByLivreur('prise en charge par le livreur', $secteur, $livreur);
+        $commandes = $commandeRepository->findBy(['restaurant'=>$restaurant]);
 
         return $this->render('restaurant/index.html.twig', [
             'restaurant' => $restaurant,
+            'commandes' => $commandes
         ]);
+    }
+
+    /**
+     * @Route("/commande/{idCommande}/{action}", name="restaurant_action", methods={"GET"})
+     */
+    public function action(int $idCommande, string $action, EntityManagerInterface $entityManager, CommandeRepository $commandeRepository, StatutCommandeRepository $statutRepository): Response
+    {
+        $commande = $commandeRepository->find($idCommande);
+        $statut = $commande->getStatut();
+
+        if ($action == "accepter") $statut = "acceptée";
+        elseif ($action == "finir") $statut = "prête";
+        else return $this->redirectToRoute('restaurant_index');
+
+        $commande->setStatut($statutRepository->findOneBy(['nom' => $statut]));
+        $entityManager->persist($commande);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('restaurant_index');
     }
 
     /**
