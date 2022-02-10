@@ -74,17 +74,21 @@
 		<h1>Inscription</h1>
 
 		{{ form_start(registrationForm) }}
+
 		<div class="form-register-email">
 			{{ form_row(registrationForm.email) }}
 		</div>
+
 		<div class="form-register-password">
 			{{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
 		</div>
+
 		<div class="form-register-profession">
 			{{ form_row(registrationForm.professionnel)}}
 		</div>
+		
 		<div class="form-register-roles">
 			{{ form_row(registrationForm.roles)}}
 		</div>
