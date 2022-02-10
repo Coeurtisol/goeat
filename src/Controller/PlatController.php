@@ -47,7 +47,7 @@ class PlatController extends AbstractController
             $entityManager->persist($plat);
             $entityManager->flush();
 
-            return $this->redirectToRoute('plat_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('restaurant_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('plat/new.html.twig', [
@@ -75,9 +75,13 @@ class PlatController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['photo']->getData();
+            $file->move($this->getParameter('plat_image'),$file->getClientOriginalName());
+
+            $plat->setPhoto($file->getClientOriginalName());
             $entityManager->flush();
 
-            return $this->redirectToRoute('plat_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('restaurant_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('plat/edit.html.twig', [
@@ -96,6 +100,6 @@ class PlatController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('plat_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('restaurant_index', [], Response::HTTP_SEE_OTHER);
     }
 }
