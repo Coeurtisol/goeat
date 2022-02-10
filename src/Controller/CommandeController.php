@@ -63,9 +63,10 @@ class CommandeController extends AbstractController
         $form = $this->createForm(CommandeType::class, $commande);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $restaurant = $restaurantRepository->find($panierWhithData[0]['plat']->getRestaurant()->getId());
+        
+        if ($form->isSubmitted() && $form->isValid() && $form->getData()->getVille() == $restaurant->getVille()) {
             $client = $this->getUser()->getClient();
-            $restaurant = $restaurantRepository->find($panierWhithData[0]['plat']->getRestaurant()->getId());
             $commande->setNumero(rand(0, 1000000));
             $commande->setMontant($total);
             $commande->setClient($client);
