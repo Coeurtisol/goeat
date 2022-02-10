@@ -1,4 +1,79 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<style>
+	.form {
+		width: 500px;
+		padding: 40px;
+		margin: 50px auto;
+		background: #24252A;
+		text-align: center;
+		border-radius: 24px;
+	}
+	.form h1 {
+		color: white;
+		margin-bottom: 50px;
+		text-transform: uppercase;
+		font-weight: 500;
+	}
+
+	.form label {
+		color: white;
+		font-family: roboto;
+	}
+	.form input {
+		border: 0;
+		background: none;
+		display: block;
+		margin: 20px auto;
+		text-align: center;
+		border: 2px solid #3498db;
+		padding: 14px 10px;
+		width: 200px;
+		outline: none;
+		color: white;
+		border-radius: 24px;
+		transition: 0.25s;
+	}
+	.btn[type = "submit"] {
+		border: 0;
+		background: #acace7;
+		display: block;
+		margin: 20px auto;
+		text-align: center;
+		border: 2px solid #acace7;
+		padding: 14px 10px;
+		width: 200px;
+		outline: none;
+		color: white;
+		border-radius: 24px;
+		transition: 0.25s;
+	}
+	.btn[type = "submit"]:hover {
+		background: rgba(0, 136, 169, 1);
+	}
+</style>
+<div class="form">
+	<h1>Entrer l'adresse de livraison</h1>
+	{{ form_start(form) }}
+
+	<div>
+		{{ form_label(form.rue, "Rue :")}}
+		{{ form_widget(form.rue)}}
+	</div>
+
+	<div>
+		{{ form_label(form.complement, "Complement :")}}
+		{{ form_widget(form.complement)}}
+	</div>
+	<div>
+		{{ form_label(form.code_postal, "Code postal :")}}
+		{{ form_widget(form.code_postal)}}
+	</div>
+	<div>
+		{{ form_label(form.ville, "Ville :")}}
+		{{ form_widget(form.ville)}}
+	</div>
+
+	<button class="btn" type="submit">{{ button_label|default('Valider') }}</button>
+
+
+	{{ form_end(form) }}
+</div>

@@ -34,7 +34,7 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="commande_new", methods={"GET", "POST"})
+     * @Route("/valider", name="commande_new", methods={"GET", "POST"})
      */
     public function new(Request $request, EntityManagerInterface $entityManager, SessionInterface $session, PlatRepository $platRepository, RestaurantRepository $restaurantRepository, StatutCommandeRepository $statutRepository): Response
     {
