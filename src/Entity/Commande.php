@@ -83,6 +83,11 @@ class Commande
      */
     private $restaurant;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Livreur::class, inversedBy="commandes")
+     */
+    private $livreur;
+
     public function __construct()
     {
         $this->ligneCommandes = new ArrayCollection();
@@ -251,6 +256,18 @@ class Commande
     public function setRestaurant(?Restaurant $restaurant): self
     {
         $this->restaurant = $restaurant;
+
+        return $this;
+    }
+
+    public function getLivreur(): ?Livreur
+    {
+        return $this->livreur;
+    }
+
+    public function setLivreur(?Livreur $livreur): self
+    {
+        $this->livreur = $livreur;
 
         return $this;
     }

@@ -1,43 +1,138 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Livreur index{% endblock %}
+{% block title %}Go Eat - Pannel livreur
+{% endblock %}
 
 {% block body %}
-    <h1>Livreur index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Telephone</th>
-                <th>Véhicule</th>
-                <th>Secteur</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for livreur in livreurs %}
-            <tr>
-                <td>{{ livreur.id }}</td>
-                <td>{{ livreur.nom }}</td>
-                <td>{{ livreur.prenom }}</td>
-                <td>{{ livreur.telephone }}</td>
-                <td>{{ livreur.vehicule }}</td>
-                <td>{{ livreur.secteur }}</td>
-                <td>
-                    <a href="{{ path('livreur_show', {'id': livreur.id}) }}">show</a>
-                    <a href="{{ path('livreur_edit', {'id': livreur.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('livreur_new') }}">Create new</a>
+	<style>
+		.pannel-livreur {
+			width: fit-content;
+			margin: 2em auto auto;
+		}
+		.pannel-livreur h1,
+		.pannel-livreur h2,
+		.pannel-livreur h3 {
+			color: black;
+		}
+		.pannel-livreur h2 {
+			text-align: center;
+			margin: 1em 0;
+		}
+		.pannel-livreur h3 {
+			margin-bottom: 0.5em;
+		}
+		.pannel-livreur section {
+			margin-top: 2em;
+		}
+		.pannel-livreur table {
+			border-collapse: collapse;
+		}
+		.pannel-livreur th,
+		.pannel-livreur td {
+			border: 1px solid black;
+			padding: 0.5em;
+		}
+	</style>
+	<main class="pannel-livreur">
+		<h1>Pannel Livreur</h1>
+		<a href="{{path('livreur_edit')}}">Mes informations</a>
+		{# COMMANDES EN COURS #}
+		<section>
+			<h2>Commandes</h2>
+			<h3>En cours sur le secteur de
+				{{secteur}}</h3>
+			{% if commandesEnCours %}
+				<table>
+					<thead>
+						<th>Numéro de commande</th>
+						<th>Adresse</th>
+						<th>Complément d'adresse</th>
+						<th>Nom client</th>
+						<th>Téléphone client</th>
+					</thead>
+					<tbody>
+						{% for commande in commandesEnCours %}
+							<tr>
+								<td>{{ commande.numero }}</td>
+								<td>{{ commande.rue }}</td>
+								<td>{{ commande.complement }}</td>
+								<td>{{ commande.client.prenom }}
+									{{ commande.client.nom }}</td>
+								<td>{{ commande.client.telephone }}</td>
+								<td>
+									<a href="{{ path('livreur_action', {'idCommande':commande.id, 'action': 'terminer'}) }}">Indiquer comme livrée</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% else %}
+				<p>Vous n'avez aucune commande en cours.</p>
+			{% endif %}
+		</section>
+		{# COMMANDES PRETES #}
+		<section>
+			<h3>Prêtes sur le secteur de
+				{{secteur}}</h3>
+			{% if commandesPretes %}
+				<table>
+					<thead>
+						<th>Numéro de commande</th>
+						<th>Adresse</th>
+						<th>Complément d'adresse</th>
+						<th>Nom client</th>
+						<th>Téléphone client</th>
+					</thead>
+					<tbody>
+						{% for commande in commandesPretes %}
+							<tr>
+								<td>{{ commande.numero }}</td>
+								<td>{{ commande.rue }}</td>
+								<td>{{ commande.complement }}</td>
+								<td>{{ commande.client.prenom }}
+									{{ commande.client.nom }}</td>
+								<td>{{ commande.client.telephone }}</td>
+								<td>
+									<a href="{{ path('livreur_action', {'idCommande':commande.id, 'action': 'prendre'}) }}">Prendre en charge</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% else %}
+				<p>Pas de commande sur ce secteur pour le moment.</p>
+			{% endif %}
+		</section>
+		{# COMMANDES LIVREES #}
+		<section>
+			<h3>Commandes livrées</h3>
+			{% if commandesLivrees %}
+				<table>
+					<thead>
+						<th>Secteur</th>
+						<th>Numéro de commande</th>
+						<th>Adresse</th>
+						<th>Complément d'adresse</th>
+						<th>Nom client</th>
+						<th>Téléphone client</th>
+					</thead>
+					<tbody>
+						{% for commande in commandesLivrees %}
+							<tr>
+								<td>{{ commande.ville }}</td>
+								<td>{{ commande.numero }}</td>
+								<td>{{ commande.rue }}</td>
+								<td>{{ commande.complement }}</td>
+								<td>{{ commande.client.prenom }}
+									{{ commande.client.nom }}</td>
+								<td>{{ commande.client.telephone }}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% else %}
+				<p>Vous n'avez réalisé aucune commande.</p>
+			{% endif %}
+		</section>
+	</main>
 {% endblock %}

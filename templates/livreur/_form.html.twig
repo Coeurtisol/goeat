@@ -1,4 +1,58 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<style>
+	.livreur-form {
+		margin: 2em auto 0;
+		width: fit-content;
+	}
+	.livreur-form h1 {
+		color: black;
+		text-align: center;
+	}
+	.livreur-form form {
+		margin-top: 2em;
+	}
+	.livreur-form div {
+		margin-top: 0.5em;
+	}
+	.livreur-form label {
+		display: inline-block;
+		width: 100px;
+	}
+	.livreur-form input,
+	.livreur-form select,
+	.livreur-form option {
+		padding: 0.5em;
+	}
+</style>
+<div class="livreur-form">
+	<h1>Informations livreur</h1>
+	{{ form_start(form) }}
+	<div>
+		{{ form_label(form.prenom, "Prénom :")}}
+		{{ form_widget(form.prenom)}}
+	</div>
+	<div>
+		{{ form_label(form.nom, "Nom :")}}
+		{{ form_widget(form.nom)}}
+	</div>
+	<div>
+		{{ form_label(form.telephone, "Téléphone :")}}
+		{{ form_widget(form.telephone)}}
+	</div>
+	<div>
+		{{ form_label(form.secteur, "Secteur :")}}
+		{{ form_widget(form.secteur, {'attr':{'list':'listeville'}})}}
+		<datalist id="listeville">
+			{% for ville in villes %}
+				<option value="{{ville.nom}}">{{ville.nom}}</option>
+			{% endfor %}
+		</datalist>
+	</div>
+	<div>
+		{{ form_label(form.vehicule, "Véhicule :")}}
+		{{ form_widget(form.vehicule)}}
+	</div>
+	<div>
+		<input type="submit" value="Enregistrer"/>
+	</div>
+	{{ form_end(form) }}
+</div>

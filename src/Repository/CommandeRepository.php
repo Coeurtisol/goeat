@@ -19,6 +19,53 @@ class CommandeRepository extends ServiceEntityRepository
         parent::__construct($registry, Commande::class);
     }
 
+    public function findByStatutBySecteurByLivreur(string $statut, string $secteur, int $livreur)
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            ->join('c.statut', 's')
+            ->addSelect('s')
+            ->where('c.statut = s.id')
+            ->andWhere('s.nom = :nomtype')
+            ->setParameter('nomtype', $statut)
+            ->andwhere('c.ville = :ville')
+            ->setParameter('ville', $secteur)
+            ->andwhere('c.livreur = :livreur')
+            ->setParameter('livreur', $livreur)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByStatutBySecteur(string $statut, string $secteur)
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            ->join('c.statut', 's')
+            ->addSelect('s')
+            ->where('c.statut = s.id')
+            ->andWhere('s.nom = :nomtype')
+            ->setParameter('nomtype', $statut)
+            ->andwhere('c.ville = :ville')
+            ->setParameter('ville', $secteur)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByStatutByLivreur(string $statut, int $livreur)
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            ->join('c.statut', 's')
+            ->addSelect('s')
+            ->where('c.statut = s.id')
+            ->andWhere('s.nom = :nomtype')
+            ->setParameter('nomtype', $statut)
+            ->andwhere('c.livreur = :livreur')
+            ->setParameter('livreur', $livreur)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Commande[] Returns an array of Commande objects
     //  */
