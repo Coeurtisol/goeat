@@ -1,9 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Restaurant{% endblock %}
+{% block title %}Modification compte restaurant{% endblock %}
 
 {% block body %}
-    <h1>Edit Restaurant</h1>
 
     {{ include('restaurant/_form.html.twig', {'button_label': 'Update'}) }}
 	<datalist id="listeville">
@@ -12,7 +11,7 @@
 		{% endfor %}
 	</datalist>
 
-    <a href="{{ path('restaurant_index') }}">back to list</a>
+    <button><a href="{{ path('restaurant_index') }}">Retourner à la liste</a></button>
 
-    {{ include('restaurant/_delete_form.html.twig') }}
+    {# {{ include('restaurant/_delete_form.html.twig') }} #}
 {% endblock %}
