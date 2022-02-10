@@ -1,18 +1,71 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Client{% endblock %}
+{% block title %}Client
+{% endblock %}
 
 {% block body %}
-    <h1>Client</h1>
+	<h1>Mon compte</h1>
 
+	<div>
+		<div>
+			<h3>Mes coordonnées</h3>
+			<p>{{ client.nom }}</p>
+			<p>{{ client.prenom }}</p>
+			<p>{{ client.rue }}</p>
+			<p>{{ client.complement }}</p>
+			<p>{{ client.codePostal }}
+				{{ client.ville }}</p>
+			<p>{{ client.telephone }}</p>
+		</div>
+		<a href="{{ path('client_edit', {'id': client.id}) }}">Modifier mon compte</a>
+	</div>
     <div>
-        <p>Mes coordonnées</p>
-        <p>{{ client.nom }}</p>
-        <p>{{ client.prenom }}</p>
-        <p>{{ client.rue }}</p>
-        <p>{{ client.complement }}</p>
-        <p>{{ client.codePostal }} {{ client.ville }}</p>
-        <p>{{ client.telephone }}</p>
+        <h3>Mes commandes</h3>
+        <div>
+        <h4>Commandes en cours</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Numero</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for commande in client.commandes %}
+                        {% if commande.statut != 'livrée'%}
+                            <tr>
+                                <td>{{commande.numero}}</td>
+                                <td>{{commande.restaurant.raisonSociale}}</td>
+                                <td>{{commande.montant / 100}} €</td>
+                                <td>{{commande.statut.nom}}</td>
+                            </tr>
+                        {% endif %}                        
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div>
+        <h4>Commandes terminées</h4>
+        <table>
+                <thead>
+                    <tr>
+                        <th>Numero</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for commande in client.commandes %}
+                        {% if commande.statut == 'livrée'%}
+                            <tr>
+                                <td>{{commande.numero}}</td>
+                                <td>{{commande.restaurant.raisonSociale}}</td>
+                                <td>{{commande.montant / 100}} €</td>
+                                <td>{{ commande.horraireLivraison ? commande.horraireLivraison|date('Y-m-d H:i:s') : '' }}</td>
+                            </tr>
+                        {% endif %}                        
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-    <a href="{{ path('client_edit', {'id': client.id}) }}">Modifier mon compte</a>
 {% endblock %}
