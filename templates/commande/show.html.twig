@@ -3,52 +3,40 @@
 {% block title %}Commande{% endblock %}
 
 {% block body %}
-    <h1>Commande</h1>
+    <h1>Detail Commande: {{commande.numero}}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ commande.id }}</td>
-            </tr>
-            <tr>
-                <th>Numero</th>
-                <td>{{ commande.numero }}</td>
-            </tr>
-            <tr>
-                <th>Rue</th>
-                <td>{{ commande.rue }}</td>
-            </tr>
-            <tr>
-                <th>Complement</th>
-                <td>{{ commande.complement }}</td>
-            </tr>
-            <tr>
-                <th>Montant</th>
-                <td>{{ commande.montant }}</td>
-            </tr>
-            <tr>
-                <th>Date</th>
-                <td>{{ commande.date ? commande.date|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>HorraireLivraison</th>
-                <td>{{ commande.horraireLivraison ? commande.horraireLivraison|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Code_postal</th>
-                <td>{{ commande.codePostal }}</td>
-            </tr>
-            <tr>
-                <th>Ville</th>
-                <td>{{ commande.ville }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div>
+        <h3>Adresse de livraison</h3>
+        <p>{{commande.rue}}</p>
+        {% if commande.complement %}
+        <p>{{commande.complement}}</p>        
+        {% endif %}
+        <p>{{commande.codePostal}}</p>
+        <p>{{commande.ville}}</p>
+    </div>
 
-    <a href="{{ path('commande_index') }}">back to list</a>
+    <div>
+        <h3>Composition de la commande</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Photo</th>
+                    <th>Nom</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ligneCommande in commande.ligneCommandes %}
+                    <tr>
+                        <td><img src="{{asset("images/plat/"~ ligneCommande.plat.photo)}}" alt=""></td>
+                        <td>{{ligneCommande.plat.nom}}</td>
+                        <td>{{ligneCommande.plat.prix / 100}}</td>
+                        <td>{{ligneCommande.quantite}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    <a href="{{ path('commande_edit', {'id': commande.id}) }}">edit</a>
-
-    {{ include('commande/_delete_form.html.twig') }}
 {% endblock %}

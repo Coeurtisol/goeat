@@ -27,7 +27,10 @@
                 <thead>
                     <tr>
                         <th>Numero</th>
+                        <th>Nom</th>
+                        <th>Montant</th>
                         <th>Statut</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,6 +41,7 @@
                                 <td>{{commande.restaurant.raisonSociale}}</td>
                                 <td>{{commande.montant / 100}} €</td>
                                 <td>{{commande.statut.nom}}</td>
+                                <td><a href="{{path('commande_show', {'id': commande.id}) }}">Voir commande</a></td>
                             </tr>
                         {% endif %}                        
                     {% endfor %}
@@ -50,7 +54,10 @@
                 <thead>
                     <tr>
                         <th>Numero</th>
-                        <th>Statut</th>
+                        <th>Nom</th>
+                        <th>Montant</th>
+                        <th>Horraire</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,6 +68,7 @@
                                 <td>{{commande.restaurant.raisonSociale}}</td>
                                 <td>{{commande.montant / 100}} €</td>
                                 <td>{{ commande.horraireLivraison ? commande.horraireLivraison|date('Y-m-d H:i:s') : '' }}</td>
+                                <td><a href="{{path('commande_show', {'id': commande.id}) }}">Voir commande</a></td>
                             </tr>
                         {% endif %}                        
                     {% endfor %}
