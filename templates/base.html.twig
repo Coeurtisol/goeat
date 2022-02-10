@@ -24,7 +24,7 @@
 			padding: 0;
 
 		}
-		h1 {
+		.logo {
 			color: white;
 			cursor: pointer;
 		}
@@ -74,7 +74,7 @@
 	<body>
 		{% block nav %}
 			<header class="navbar">
-				<h1 href="{{path('home')}}">Go Eat</h1>
+				<h1 class="logo" href="{{path('home')}}">Go Eat</h1>
 				<nav>
 					<ul class="nav_links">
 						<li>
