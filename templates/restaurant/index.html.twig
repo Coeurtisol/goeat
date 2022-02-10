@@ -13,7 +13,9 @@
 	<p>{{restaurant.codePostal}}
 		{{restaurant.ville}}</p>
 	<p>{{restaurant.telephone}}</p>
-    <button><a href="{{ path('restaurant_edit', {'id': restaurant.id}) }}">Modifier mes infos</a></button>
+	<button>
+		<a href="{{ path('restaurant_edit', {'id': restaurant.id}) }}">Modifier mes infos</a>
+	</button>
 
 	<h3>Liste des plats</h3>
 	<table>
@@ -33,9 +35,206 @@
 					<td>{{plat.nom}}</td>
 					<td>{{plat.prix / 100}}</td>
 					<td>{{plat.stock}}</td>
-					<td>{{ include('plat/_delete_form.html.twig') }} <a href="{{ path('plat_edit', {'id': plat.id}) }}">Modifier</a></td>
+					<td>{{ include('plat/_delete_form.html.twig') }}
+						<a href="{{ path('plat_edit', {'id': plat.id}) }}">Modifier</a>
+					</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
+	<style>
+		.pannel-restaurant {
+			width: fit-content;
+			margin: 2em auto auto;
+		}
+		.pannel-restaurant h2,
+		.pannel-restaurant h3 {
+			color: black;
+		}
+		.pannel-restaurant h2 {
+			text-align: center;
+			margin: 1em 0;
+		}
+		.pannel-restaurant h3 {
+			margin-bottom: 0.5em;
+		}
+		.pannel-restaurant section {
+			margin-top: 2em;
+		}
+		.pannel-restaurant table {
+			border-collapse: collapse;
+		}
+		.pannel-restaurant th,
+		.pannel-restaurant td {
+			border: 1px solid black;
+			padding: 0.5em;
+		}
+	</style>
+	<main class="pannel-restaurant">
+		<h2>Commandes</h2>
+		{# COMMANDES EN ATTENTE #}
+		<section>
+			<h3>En attente</h3>
+			{% set commandesEnAttente = commandes|filter(c => c.statut.nom == 'en attente') %}
+			{% if commandesEnAttente %}
+				<table>
+					<thead>
+						<th>Numéro de commande</th>
+						<th>Adresse</th>
+						<th>Complément d'adresse</th>
+						<th>Nom client</th>
+						<th>Téléphone client</th>
+					</thead>
+					<tbody>
+						{% for commande in commandesEnAttente %}
+							<tr>
+								<td>{{ commande.numero }}</td>
+								<td>{{ commande.rue }}</td>
+								<td>{{ commande.complement }}</td>
+								<td>{{ commande.client.prenom }}
+									{{ commande.client.nom }}</td>
+								<td>{{ commande.client.telephone }}</td>
+								<td>
+									<a href="{{ path('restaurant_action', {'idCommande':commande.id, 'action': 'accepter'}) }}">Accepter</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% else %}
+				<p>Aucune commande en attente.</p>
+			{% endif %}
+		</section>
+		{# COMMANDES ACCEPTEES #}
+		<section>
+			<h3>Acceptées</h3>
+			{% set commandesAcceptees = commandes|filter(c => c.statut.nom == 'acceptée') %}
+			{% if commandesAcceptees %}
+				<table>
+					<thead>
+						<th>Numéro de commande</th>
+						<th>Adresse</th>
+						<th>Complément d'adresse</th>
+						<th>Nom client</th>
+						<th>Téléphone client</th>
+					</thead>
+					<tbody>
+						{% for commande in commandesAcceptees %}
+							<tr>
+								<td>{{ commande.numero }}</td>
+								<td>{{ commande.rue }}</td>
+								<td>{{ commande.complement }}</td>
+								<td>{{ commande.client.prenom }}
+									{{ commande.client.nom }}</td>
+								<td>{{ commande.client.telephone }}</td>
+								<td>
+									<a href="{{ path('restaurant_action', {'idCommande':commande.id, 'action': 'finir'}) }}">Indiquer comme prête</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% else %}
+				<p>Aucune commande acceptées.</p>
+			{% endif %}
+		</section>
+		{# COMMANDES PRETES #}
+		<section>
+			<h3>Prêtes</h3>
+			{% set commandesPretes = commandes|filter(c => c.statut.nom == 'prête') %}
+			{% if commandesPretes %}
+				<table>
+					<thead>
+						<th>Numéro de commande</th>
+						<th>Adresse</th>
+						<th>Complément d'adresse</th>
+						<th>Nom client</th>
+						<th>Téléphone client</th>
+					</thead>
+					<tbody>
+						{% for commande in commandesPretes %}
+							<tr>
+								<td>{{ commande.numero }}</td>
+								<td>{{ commande.rue }}</td>
+								<td>{{ commande.complement }}</td>
+								<td>{{ commande.client.prenom }}
+									{{ commande.client.nom }}</td>
+								<td>{{ commande.client.telephone }}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% else %}
+				<p>Aucune commande prêtes.</p>
+			{% endif %}
+		</section>
+		{# COMMANDES EN LIVRAISON #}
+		<section>
+			<h3>En livraison</h3>
+			{% set commandesEnLivraison = commandes|filter(c => c.statut.nom == 'prise en charge par le livreur') %}
+			{% if commandesEnLivraison %}
+				<table>
+					<thead>
+						<th>Numéro de commande</th>
+						<th>Infos livreur</th>
+						<th>Adresse</th>
+						<th>Complément d'adresse</th>
+						<th>Nom client</th>
+						<th>Téléphone client</th>
+					</thead>
+					<tbody>
+						{% for commande in commandesEnLivraison %}
+							<tr>
+								<td>{{ commande.numero }}</td>
+								<td>{{ commande.livreur.prenom }}
+									{{ commande.livreur.nom }}
+									{{ commande.livreur.telephone }}</td>
+								<td>{{ commande.rue }}</td>
+								<td>{{ commande.complement }}</td>
+								<td>{{ commande.client.prenom }}
+									{{ commande.client.nom }}</td>
+								<td>{{ commande.client.telephone }}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% else %}
+				<p>Aucune commande en livraison.</p>
+			{% endif %}
+		</section>
+		{# COMMANDES LIVREES #}
+		<section>
+			<h3>Livrées</h3>
+			{% set commandesLivrees = commandes|filter(c => c.statut.nom == 'livrée') %}
+			{% if commandesLivrees %}
+				<table>
+					<thead>
+						<th>Numéro de commande</th>
+						<th>Infos livreur</th>
+						<th>Adresse</th>
+						<th>Complément d'adresse</th>
+						<th>Nom client</th>
+						<th>Téléphone client</th>
+					</thead>
+					<tbody>
+						{% for commande in commandesLivrees %}
+							<tr>
+								<td>{{ commande.numero }}</td>
+								<td>{{ commande.livreur.prenom }}
+									{{ commande.livreur.nom }}
+									{{ commande.livreur.telephone }}</td>
+								<td>{{ commande.rue }}</td>
+								<td>{{ commande.complement }}</td>
+								<td>{{ commande.client.prenom }}
+									{{ commande.client.nom }}</td>
+								<td>{{ commande.client.telephone }}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% else %}
+				<p>Aucune commande livrées.</p>
+			{% endif %}
+		</section>
+	</main>
 {% endblock %}
