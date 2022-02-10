@@ -32,7 +32,7 @@ class PanierController extends AbstractController
             ];
         }
 
-        $total=0;
+        $total=300;
 
         foreach ($panierWhithData as $item) {
             $totalByPlat=$item['plat']->getPrix() * $item['quantite'];

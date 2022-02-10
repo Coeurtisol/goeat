@@ -10,7 +10,7 @@
 				<div class="vitrine"><img></div>
 				<div class="detail">
 					<span class="titleRestau">{{ restaurant.raisonSociale }}</span>
-					<button>Afficher la carte</button>
+					<button> <a href="{{path('restaurant_show', {'id':restaurant.id}) }}">Afficher la carte</a></button>
 				</div>
 			</li>
 		{% endfor %}
