@@ -4,23 +4,102 @@
 {% endblock %}
 
 {% block body %}
-	<h1>{{restaurant.raisonSociale}}</h1>
+	<style>
+		.restaurateur {
+			width: 80%;
+			margin: 30px auto;
+			display: flex;
+			justify-content: space-evenly;
+			flex-wrap: wrap;
+		}
+		.restaurateur img {
+			width: 100%;
+			height: 100%;
+		}
+		.unRestau {
+			list-style-type: none;
+			height: 400px;
+			width: 30%;
+			border: 1px solid black;
+			border-radius: 15px;
+			margin: 15px;
+		}
+		.infoPlatRestau {
+			display: flex;
+			justify-content: space-evenly;
+		}
+		.vitrine {
+			width: 95%;
+			height: 65%;
+			margin: 2% auto;
+		}
+		.detail {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			align-content: center;
+			margin: 5px;
+		}
 
-	<h3>Adresse</h3>
-	<p>{{restaurant.rue}}</p>
-	{% if restaurant.complement %}
-		<p>{{restaurant.complement}}</p>
-	{% endif %}
-	<p>{{restaurant.ville}}</p>
+		.titleRestau {
+			margin: 5px;
+			font-size: 17px;
+			font-family: roboto;
+			font-weight: 600;
+		}
 
-	{% for plat in restaurant.plats %}
-		<div>
-			<a href="{{path('plat_show',{'id': plat.id})}}">
-				<p>{{plat.nom}}</p>
-				<img src="{{ asset("images/plat/"~ plat.photo)}}">
-				<p>{{plat.description}}</p>
-				<p>{{plat.prix / 100}}</p>
-			</a>
-		</div>
-	{% endfor %}
+		.restaurateur .btnEdit {
+			width: 85%;
+			font-family: roboto;
+			background-color: orange;
+			border-radius: 5px;
+			border: 1px solid orange;
+			font-size: 18px;
+			padding: 10px;
+			margin: 10px 0;
+
+		}
+		.btnEdit a {
+			text-decoration: none;
+			color: white;
+		}
+
+		.info {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+	</style>
+
+	<div class="info">
+		<h1>{{restaurant.raisonSociale}}</h1>
+
+		<h3>Adresse</h3>
+		<p>{{restaurant.rue}}</p>
+		{% if restaurant.complement %}
+			<p>{{restaurant.complement}}</p>
+		{% endif %}
+		<p>{{restaurant.ville}}</p>
+	</div>
+
+	<ul class="restaurateur">
+		{% for plat in restaurant.plats %}
+			<li class="unRestau">
+				<div class="vitrine"><img src="{{asset("images/plat/"~ plat.photo)}}" alt=""></div>
+				<div class="infoPlatRestau">
+					<div class="detail">
+						<span class="titleRestau">Nom :
+							{{plat.nom}}</span>
+						<span class="titleRestau">Prix :
+							{{plat.prix / 100}}</span>
+					</div>
+				</div>
+				<div class="infoPlatRestau">
+					<button class="btnEdit">
+						<a href="{{path('plat_show',{'id': plat.id})}}">Voir</a>
+					</button>
+				</div>
+			</li>
+		{% endfor %}
+	</ul>
 {% endblock %}
