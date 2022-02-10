@@ -5,6 +5,7 @@
 
 {% block body %}
 
+
 	{% for restaurant in restaurants %}
 		<ul>
 			<li>{{ restaurant.raisonSociale }}</li>
@@ -16,5 +17,198 @@
 		</ul>
 	{% endfor %}
 
+	{% for restaurant in restaurants %}
+		<div class="main-content">
+			<div class="slideshow-container">
+				<div class="slideshow">
+					<div class="slide s1">
+						<div class="overlay"></div>
+						<h2>{{ restaurant.raisonSociale }}</h2>
+						<ul>
+							<li>{{ restaurant.rue }}</li>
+							<li>{{ restaurant.ville }}</li>
+							<li>{{ restaurant.codePostal }}</li>
+							<li>{{ restaurant.complement }}</li>
+							<li>{{ restaurant.telephone }}</li>
+						</ul>
+						<a>Explore it</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+	<style>
+		.main-content {
+			padding: 3vw 5vw 5vw;
+		}
+		h1 {
+			font-family: Playfair Display, serif;
+			font-size: clamp(25px, 7vw, 70px);
+			font-weight: 200;
+		}
+		h1 + span {
+			font-size: clamp(14px, 2vw, 20px);
+		}
+		.slideshow-container {
+			margin-top: 4vw;
+			overflow: hidden;
+			min-height: 60vmin;
+			cursor: grab;
+			position: relative;
+		}
+		.slideshow-container:active {
+			cursor: grabbing;
+		}
+		.slideshow {
+			position: absolute;
+			height: 100%;
+			display: flex;
+			pointer-events: none;
+		}
+		.slide {
+			flex-shrink: 0;
+			height: 100%;
+			width: 80vmin;
+			color: #fff;
+			background-size: cover;
+			background-position: center;
+			position: relative;
+		}
+		.slide:not(:nth-child(1)) {
+			margin-left: 10px;
+		}
+		.overlay {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: rgba(0, 0, 0, 0.15);
+		}
+		.slide h2,
+		.slide a {
+			text-shadow: 0 0 5px rgba(0, 0, 0, 0.39);
+		}
+		.slide h2 {
+			position: absolute;
+			top: clamp(10px, 2vw, 20px);
+			left: clamp(10px, 2vw, 20px);
+			font-size: clamp(20px, 3vw, 40px);
+			font-weight: 300;
+		}
+		.slide a {
+			position: absolute;
+			bottom: clamp(10px, 2vw, 20px);
+			right: clamp(10px, 2vw, 20px);
+			font-size: clamp(16px, 3vw, 20px);
+			font-weight: 300;
+			color: #fff;
+			pointer-events: auto;
+		}
+		.slide ul,
+		li {
+			position: absolute;
+			bottom: clamp(10px, 2vw, 20px);
+			right: clamp(10px, 2vw, 20px);
+			font-size: clamp(16px, 3vw, 20px);
+			font-weight: 300;
+			color: #fff;
+			pointer-events: auto;
+		}
+	</style>
 
+	<script>
+		const slider = document.querySelector('.slideshow-container')
+let holding = false;
+let firstClickX;
+let alreadyLeftScrolled;
+let velocity;
+let rafID;
+
+slider.addEventListener('mousedown', e => {
+holding = true;
+
+firstClickX = e.pageX - slider.offsetLeft;
+
+alreadyLeftScrolled = slider.scrollLeft;
+
+stopTransition()
+})
+
+slider.addEventListener('mousemove', e => {
+if (! holding) 
+return;
+
+
+
+const x = e.pageX - slider.offsetLeft;
+
+const scrolled = (x - firstClickX) * 2;
+
+const prevScrollLeft = slider.scrollLeft
+
+slider.scrollLeft = alreadyLeftScrolled - scrolled;
+
+velocity = slider.scrollLeft - prevScrollLeft;
+
+})
+
+slider.addEventListener('mouseup', () => {
+holding = false;
+startTransition()
+})
+slider.addEventListener('mouseleave', () => {
+holding = false;
+})
+
+function startTransition() {
+
+stopTransition();
+
+rafID = requestAnimationFrame(decreasingTransition);
+}
+
+function stopTransition() {
+cancelAnimationFrame(rafID)
+}
+function decreasingTransition() {
+
+slider.scrollLeft += velocity;
+velocity *= 0.95;
+if (Math.abs(velocity) > 0.5) {
+rafID = requestAnimationFrame(decreasingTransition)
+console.log(velocity);
+}
+
+}
+
+slider.addEventListener('touchstart', e => {
+holding = true;
+// pageX => la largeur entre mon click et le DOCUMENT
+firstClickX = e.targetTouches[0].pageX - slider.offsetLeft;
+
+alreadyLeftScrolled = slider.scrollLeft;
+stopTransition()
+})
+slider.addEventListener('touchend', () => {
+holder = false;
+startTransition()
+})
+slider.addEventListener('touchmove', e => {
+if (! holding) 
+return;
+
+
+
+const x = e.targetTouches[0].pageX - slider.offsetLeft;
+
+const scrolled = (x - firstClickX) * 2;
+
+const prevScrollLeft = slider.scrollLeft;
+
+slider.scrollLeft = alreadyLeftScrolled - scrolled;
+
+velocity = slider.scrollLeft - prevScrollLeft;
+})
+	</script>
 {% endblock %}
