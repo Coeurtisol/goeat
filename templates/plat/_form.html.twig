@@ -1,4 +1,4 @@
-<div class="plat-form">
+<div class="form">
 	<h1>Informations plat</h1>
 	{{ form_start(form) }}
 
@@ -24,89 +24,8 @@
 		{{ form_widget(form.photo)}}
 	</div>
 
-	<button class="btn" type="submit">{{ button_label|default('Save') }}</button>
+	<button class="btn" type="submit">{{ button_label|default('Enregistrer') }}</button>
 
 
 	{{ form_end(form) }}
 </div>
-
-<style>
-	.plat-form {
-		width: 500px;
-		padding: 40px;
-		margin: 50px auto;
-		background: #24252A;
-		text-align: center;
-		border-radius: 24px;
-	}
-	.plat-form h1 {
-		color: white;
-		margin-bottom: 50px;
-		text-transform: uppercase;
-		font-weight: 500;
-	}
-
-	.plat-form label {
-		color: white;
-		font-family: roboto;
-	}
-	.plat-form input[type="file"] {
-		border: 0;
-		background: none;
-		display: block;
-		margin: 20px auto;
-		text-align: center;
-		padding: 14px 10px;
-		width: 260px;
-		outline: none;
-		color: white;
-		border-radius: 24px;
-		transition: 0.25s;
-	}
-	.plat-form input {
-		border: 0;
-		background: none;
-		display: block;
-		margin: 20px auto;
-		text-align: center;
-		border: 2px solid #3498db;
-		padding: 14px 10px;
-		width: 200px;
-		outline: none;
-		color: white;
-		border-radius: 24px;
-		transition: 0.25s;
-	}
-	.plat-form textarea {
-		border: 0;
-		background: none;
-		display: block;
-		margin: 20px auto;
-		text-align: center;
-		border: 2px solid #3498db;
-		padding: 14px 10px;
-		width: 200px;
-		outline: none;
-		color: white;
-		border-radius: 24px;
-		transition: 0.25s;
-	}
-
-	.plat-form button[type = "submit"] {
-		border: 0;
-		background: #acace7;
-		display: block;
-		margin: 20px auto;
-		text-align: center;
-		border: 2px solid #acace7;
-		padding: 14px 10px;
-		width: 200px;
-		outline: none;
-		color: white;
-		border-radius: 24px;
-		transition: 0.25s;
-	}
-	.plat-form button[type = "submit"]:hover {
-		background: rgba(0, 136, 169, 1);
-	}
-</style>

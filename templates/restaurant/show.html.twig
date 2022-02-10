@@ -3,73 +3,11 @@
 {% block title %}Restaurant
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/restaurant_show.css') }}">
+{% endblock %}
+
 {% block body %}
-	<style>
-		.card-list {
-			width: 80%;
-			margin: 30px auto;
-			display: flex;
-			justify-content: space-evenly;
-			flex-wrap: wrap;
-		}
-		.card-list img {
-			width: 100%;
-			height: 100%;
-		}
-		.card {
-			list-style-type: none;
-			height: 400px;
-			width: 30%;
-			border: 1px solid black;
-			border-radius: 15px;
-			margin: 15px;
-		}
-		.card-info {
-			display: flex;
-			justify-content: space-evenly;
-		}
-		.vitrine {
-			width: 95%;
-			height: 65%;
-			margin: 2% auto;
-		}
-		.card-detail {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			align-content: center;
-			margin: 5px;
-		}
-
-		.card-title {
-			margin: 5px;
-			font-size: 17px;
-			font-family: roboto;
-			font-weight: 600;
-		}
-
-		.card-list .btnEdit {
-			width: 85%;
-			font-family: roboto;
-			background-color: orange;
-			border-radius: 5px;
-			border: 1px solid orange;
-			font-size: 18px;
-			padding: 10px;
-			margin: 10px 0;
-
-		}
-		.btnEdit a {
-			text-decoration: none;
-			color: white;
-		}
-
-		.info {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-		}
-	</style>
 
 	<div class="info">
 		<h1>{{restaurant.raisonSociale}}</h1>
