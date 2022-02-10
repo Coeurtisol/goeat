@@ -20,17 +20,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class RestaurantController extends AbstractController
 {
     /**
-     * @Route("/", name="restaurant_index", methods={"GET"})
+     * @Route("/mon-compte", name="restaurant_index", methods={"GET"})
      */
-    public function index(RestaurantRepository $restaurantRepository): Response
+    public function index(): Response
     {
         $user = $this->getUser();
         if ($user && !$user->getRestaurant()) {
             return $this->redirectToRoute('restaurant_new');
         }
 
+        $restaurant = $user->getRestaurant();
+
         return $this->render('restaurant/index.html.twig', [
-            'restaurants' => $restaurantRepository->findAll(),
+            'restaurant' => $restaurant,
         ]);
     }
 
