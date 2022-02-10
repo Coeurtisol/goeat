@@ -85,6 +85,25 @@
 				<div>
 
 					{% if app.user %}
+						{% if app.user.roles[0] == "ROLE_RESTAURATEUR" %}
+							<button>
+								<a href="{{path('restaurant_index')}}" class="btnDeconnexion">Mon compte</a>
+							</button>
+						{% endif %}
+						{% if app.user.roles[0] == "ROLE_LIVREUR" %}
+							<button>
+								<a href="{{path('livreur_index')}}" class="btnDeconnexion">Mon compte</a>
+							</button>
+						{% endif %}
+						{% if app.user.roles[0] == "ROLE_USER" %}
+							<button>
+								<a href="{{path('client_index')}}" class="btnDeconnexion">Mon compte</a>
+							</button>
+						{% endif %}
+					{% endif %}
+
+
+					{% if app.user %}
 						<button>
 							<a href="{{path('app_logout')}}" class="btnDeconnexion">Déconnexion</a>
 						</button>

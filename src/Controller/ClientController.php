@@ -18,12 +18,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class ClientController extends AbstractController
 {
     /**
-     * @Route("/", name="client_index", methods={"GET"})
+     * @Route("/mon-compte", name="client_index", methods={"GET"})
      */
     public function index(ClientRepository $clientRepository): Response
     {
-        return $this->render('client/index.html.twig', [
-            'clients' => $clientRepository->findAll(),
+        $client = $clientRepository->findOneBy(array('user'=>$this->getUser()->getId()));
+        return $this->render('client/show.html.twig', [
+            'client' => $client,
         ]);
     }
 

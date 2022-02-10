@@ -5,46 +5,14 @@
 {% block body %}
     <h1>Client</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ client.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ client.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ client.prenom }}</td>
-            </tr>
-            <tr>
-                <th>Rue</th>
-                <td>{{ client.rue }}</td>
-            </tr>
-            <tr>
-                <th>Complement</th>
-                <td>{{ client.complement }}</td>
-            </tr>
-            <tr>
-                <th>Ville</th>
-                <td>{{ client.ville }}</td>
-            </tr>
-            <tr>
-                <th>Telephone</th>
-                <td>{{ client.telephone }}</td>
-            </tr>
-            <tr>
-                <th>CodePostal</th>
-                <td>{{ client.codePostal }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('client_index') }}">back to list</a>
-
-    <a href="{{ path('client_edit', {'id': client.id}) }}">edit</a>
-
-    {{ include('client/_delete_form.html.twig') }}
+    <div>
+        <p>Mes coordonnées</p>
+        <p>{{ client.nom }}</p>
+        <p>{{ client.prenom }}</p>
+        <p>{{ client.rue }}</p>
+        <p>{{ client.complement }}</p>
+        <p>{{ client.codePostal }} {{ client.ville }}</p>
+        <p>{{ client.telephone }}</p>
+    </div>
+    <a href="{{ path('client_edit', {'id': client.id}) }}">Modifier mon compte</a>
 {% endblock %}
