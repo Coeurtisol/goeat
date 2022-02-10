@@ -27,8 +27,8 @@
                 <td>{{ plat.description }}</td>
                 <td>{{ plat.photo }}</td>
                 <td>
-                  <button><a href="{{ path('plat_show', {'id': plat.id}) }}">show</a></button> 
-                   <button><a href="{{ path('plat_edit', {'id': plat.id}) }}">edit</a></button>
+                  <button><a href="{{ path('plat_show', {'id': plat.id}) }}">Voir</a></button> 
+                   <button><a href="{{ path('plat_edit', {'id': plat.id}) }}">Modifier</a></button>
                 </td>
             </tr>
         {% else %}
@@ -39,5 +39,5 @@
         </tbody>
     </table>
 
-   <button> <a href="{{ path('plat_new') }}">Create new</a></button>
+   <button> <a href="{{ path('plat_new') }}">Crée un nouveau plat</a></button>
 {% endblock %}
