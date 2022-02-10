@@ -3,11 +3,9 @@
 namespace App\Controller;
 
 use App\Api\VilleApi;
-use App\Entity\Client;
 use App\Entity\Restaurant;
 use App\Form\RestaurantType;
 use App\Repository\CommandeRepository;
-use App\Repository\RestaurantRepository;
 use App\Repository\StatutCommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,6 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class RestaurantController extends AbstractController
 {
     /**
+     * @IsGranted("ROLE_RESTAURATEUR")
      * @Route("/mon-compte", name="restaurant_index", methods={"GET"})
      */
     public function index(CommandeRepository $commandeRepository): Response
@@ -42,6 +41,7 @@ class RestaurantController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_RESTAURATEUR")
      * @Route("/commande/{idCommande}/{action}", name="restaurant_action", methods={"GET"})
      */
     public function action(int $idCommande, string $action, EntityManagerInterface $entityManager, CommandeRepository $commandeRepository, StatutCommandeRepository $statutRepository): Response
@@ -118,19 +118,5 @@ class RestaurantController extends AbstractController
             'form' => $form,
             'villes' => $villes,
         ]);
-    }
-
-    /**
-     * @IsGranted("ROLE_RESTAURATEUR") 
-     * @Route("/{id}", name="restaurant_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Restaurant $restaurant, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$restaurant->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($restaurant);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('restaurant_index', [], Response::HTTP_SEE_OTHER);
     }
 }
