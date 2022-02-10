@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande index{% endblock %}
+
+{% block body %}
+
+    <h2>Merci pour votre commande</h2>
+    <p>Vous pouvez suivre l'état de votre commande dans votre compte ou en cliquant sur le bouton en-dessous</p>
+    <button><a href="{{path('client_index')}}">Voir ma commande</a></button>
+
+{% endblock %}
