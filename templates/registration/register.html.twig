@@ -3,83 +3,23 @@
 {% block title %}Register
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form/form.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/form/form.css') }}">
+{% endblock %}
+
 {% block body %}
 
-	<style>
-		.box {
-			width: 500px;
-			padding: 40px;
-			margin: 50px auto;
-			background: #24252A;
-			text-align: center;
-			border-radius: 24px;
-		}
-		.box h1 {
-			color: white;
-			margin-bottom: 50px;
-			text-transform: uppercase;
-			font-weight: 500;
-		}
-
-		.form-register-profession, .form-register-roles{
-			margin: 10px auto;
-			text-align: center;
-			padding: 14px 10px;
-		}
-	
-		#registration_form_professionnel, #registration_form_roles{
-		    margin-left: 15px;
-		}
-
-		.box input[type="text"],
-		.box input[type = "password"] {
-			border: 0;
-			background: none;
-			display: block;
-			margin: 20px auto;
-			text-align: center;
-			border: 2px solid #3498db;
-			padding: 14px 10px;
-			width: 200px;
-			outline: none;
-			color: white;
-			border-radius: 24px;
-			transition: 0.25s;
-		}
-		.box label {
-			color: white;
-			font-family: roboto;
-		}
-		.box button[type = "submit"] {
-			border: 0;
-			background: rgba(0, 136, 169, 1);
-			display: block;
-			margin: 20px auto;
-			text-align: center;
-			border: 2px solid #3498db;
-			padding: 14px 10px;
-			width: 200px;
-			outline: none;
-			color: white;
-			border-radius: 24px;
-			transition: 0.25s;
-		}
-		.box button[type = "submit"]:hover {
-			background: rgba(0, 136, 169, 1);
-		}
-	</style>
-
-
-	<div class="box">
+	<div class="form">
 		<h1>Inscription</h1>
 
 		{{ form_start(registrationForm) }}
 
-		<div class="form-register-email">
+		<div>
 			{{ form_row(registrationForm.email) }}
 		</div>
 
-		<div class="form-register-password">
+		<div>
 			{{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
