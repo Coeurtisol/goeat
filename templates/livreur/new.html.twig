@@ -1,17 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Livreur
-{% endblock %}
+{% block title %}Go Eat - Pannel livreur{% endblock %}
 
 {% block body %}
-	<h1>Create new Livreur</h1>
 
-	{{ include('livreur/_form.html.twig') }}
-	<datalist id="listeville">
-		{% for ville in villes %}
-			<option value="{{ville.nom}}">{{ville.nom}}</option>
-		{% endfor %}
-	</datalist>
+	{{ include('livreur/_form.html.twig', {'villes': villes}) }}
 
-	<a href="{{ path('livreur_index') }}">back to list</a>
 {% endblock %}
