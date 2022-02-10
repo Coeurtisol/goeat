@@ -1,0 +1,80 @@
+.restaurant-form {
+  width: 500px;
+  padding: 40px;
+  margin: 50px auto;
+  background: #24252a;
+  text-align: center;
+  border-radius: 24px;
+}
+.restaurant-form h1 {
+  color: white;
+  margin-bottom: 50px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.restaurant-form label {
+  color: white;
+  font-family: roboto;
+}
+
+.restaurant-form input {
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 14px 10px;
+  width: 200px;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  transition: 0.25s;
+}
+.restaurant-form textarea {
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 14px 10px;
+  width: 200px;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  transition: 0.25s;
+}
+.restaurant-form select {
+  border: 0;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 14px 10px;
+  width: 200px;
+  outline: none;
+  color: white;
+  background-color: #24252a;
+  border-radius: 24px;
+  transition: 0.25s;
+}
+.restaurant-form button[type="submit"] {
+  border: 0;
+  background: #acace7;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #acace7;
+  padding: 14px 10px;
+  width: 200px;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  transition: 0.25s;
+}
+.restaurant-form button[type="submit"]:hover {
+  background: rgba(0, 136, 169, 1);
+}

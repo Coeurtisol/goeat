@@ -1,78 +1,10 @@
 ﻿{% extends 'base.html.twig' %}
 
-
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/panier.css') }}">
+{% endblock %}
 
 {% block body %}
-
-<style>
-
-.listePanier {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-	margin: 50px auto;
-}
-
-.listePanier li {
-    display: flex;
-    align-items: center;
-    font-family: cursive;
-    margin: 20px auto;
-    width: 50%;
-    border-bottom: 1px black solid;
-    justify-content: center;
-    padding-bottom: 29px;
-}
-
-
-.listePanier li img {
-	    height: 75px;
-    width: 10%;
-}
-
-.listePanier li .nom {
-    width: 20%;
-    text-align: center;
-}
-
-.listePanier li .prix {
-    text-align: center;
-    width: 5%;
-}
-
-.listePanier li .quantite {
-    width: 5%;
-    text-align: center;
-}
-
-.listePanier li a {
-	 text-decoration: none;
-    width: 10%;
-    text-align: center;
-    font-size: 23px;
-	 color: red;
-}
-
-.listePanier .totalPanier {
-    font-size: 22px;
-    border-bottom: white 1px solid;
-    font-weight: bold;
-}
-
-.listePanier button {
-border: 1px black solid;
-    background-color: #acace7;
-    color: black;
-    text-decoration: none;
-    text-transform: uppercase;
-    padding: 1%;
-    margin: 10px auto 0;
-    border-radius: 5%;
-}
-
-</style>
-
 
 	{% if plats | length > 0 %}
 
