@@ -4,46 +4,183 @@
 {% endblock %}
 
 {% block body %}
-<<<<<<< Updated upstream
-	<h1>Mon compte</h1>
+	<h1 class="compteRestaurateur">Mon compte</h1>
 
-	<h2>{{restaurant.raisonSociale}}</h2>
-	<h3>Adresse</h3>
-	<p>{{restaurant.rue}}</p>
-	<p>{{restaurant.complement}}</p>
-	<p>{{restaurant.codePostal}}
-		{{restaurant.ville}}</p>
-	<p>{{restaurant.telephone}}</p>
-	<button>
-		<a href="{{ path('restaurant_edit', {'id': restaurant.id}) }}">Modifier mes infos</a>
-	</button>
+	<div class="monCompte">
+		<h2>{{restaurant.raisonSociale}}</h2>
+		<h3>Adresse</h3>
+		<p>{{restaurant.rue}}</p>
+		<p>{{restaurant.complement}}</p>
+		<p>{{restaurant.codePostal}}
+			{{restaurant.ville}}</p>
+		<p>{{restaurant.telephone}}</p>
+		<button>
+			<a href="{{ path('restaurant_edit', {'id': restaurant.id}) }}">Modifier mes infos</a>
+		</button>
+	</div>
 
-	<h3>Liste des plats</h3>
-	<table>
-		<thead>
-			<tr>
-				<th>Photo</th>
-				<th>Nom</th>
-				<th>Prix</th>
-				<th>Stock</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
+	<div class="platRestau">
+		<h3>Liste des plats :</h3>
+
+		<ul class="restaurateur">
 			{% for plat in restaurant.plats %}
-				<tr>
-					<td><img src="{{asset("images/plat/"~ plat.photo)}}" alt=""></td>
-					<td>{{plat.nom}}</td>
-					<td>{{plat.prix / 100}}</td>
-					<td>{{plat.stock}}</td>
-					<td>{{ include('plat/_delete_form.html.twig') }}
-						<a href="{{ path('plat_edit', {'id': plat.id}) }}">Modifier</a>
-					</td>
-				</tr>
+				<li class="unRestau">
+					<div class="vitrine"><img src="{{asset("images/plat/"~ plat.photo)}}" alt=""></div>
+					<div class="infoPlatRestau">
+						<div class="detail">
+							<span class="titleRestau">Nom :
+								{{plat.nom}}</span>
+							<span class="titleRestau">Prix :
+								{{plat.prix / 100}}</span>
+							<span class="titleRestau">Stock :
+								{{plat.stock}}</span>
+						</div>
+						<div class="editDelete">
+							{{ include('plat/_delete_form.html.twig') }}
+							<button class="btnEdit">
+								<a href="{{ path('plat_edit', {'id': plat.id}) }}">Modifier</a>
+							</button>
+						</div>
+					</div>
+				</li>
 			{% endfor %}
-		</tbody>
-	</table>
+		</ul>
+		<button class="ajouePlat">
+			<a href="{{path('plat_new')}}">Ajouter un plat</a>
+		</button>
+	</div>
+
+
 	<style>
+		.compteRestaurateur {
+			font-family: roboto;
+			margin-left: 100px;
+			margin-top: 30px;
+			text-decoration: underline;
+		}
+		.monCompte {
+			margin: 30px auto;
+			width: 800px;
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+			font-family: roboto;
+
+		}
+		.monCompte h2 {
+			margin: 10px 0;
+		}
+		.monCompte button {
+			background-color: #acace7;
+			border: none;
+			border-radius: 7px;
+			padding: 15px;
+			margin-top: 10px;
+
+		}
+		.monCompte button a {
+			text-decoration: none;
+			color: white;
+			font-size: 16px;
+		}
+
+		.platRestau h3 {
+			font-family: roboto;
+			font-size: 25px;
+		}
+		.restaurateur {
+			width: 80%;
+			margin: 30px auto;
+			display: flex;
+			justify-content: space-evenly;
+		}
+		.restaurateur img {
+			width: 100%;
+			height: 100%;
+		}
+		.unRestau {
+			list-style-type: none;
+			height: 400px;
+			width: 30%;
+			border: 2px solid black;
+			border-radius: 15px;
+		}
+		.infoPlatRestau {
+			display: flex;
+			justify-content: space-evenly;
+		}
+		.vitrine {
+			width: 95%;
+			height: 65%;
+			margin: 2% auto;
+		}
+		.detail {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			align-content: center;
+			margin: 5px;
+		}
+		.editDelete {
+			width: 200px;
+		}
+		.titleRestau {
+			margin: 5px;
+			font-size: 17px;
+			font-family: roboto;
+			font-weight: 600;
+		}
+		.restaurateur .btnDelete {
+			width: 85%;
+			font-family: roboto;
+			background-color: red;
+			border-radius: 5px;
+			border: 1px solid red;
+			font-size: 18px;
+			padding: 10px;
+			cursor: pointer;
+			color: white;
+		}
+		.restaurateur .btnEdit {
+			width: 85%;
+			font-family: roboto;
+			background-color: orange;
+			border-radius: 5px;
+			border: 1px solid orange;
+			font-size: 18px;
+			padding: 10px;
+			margin: 10px 0;
+
+		}
+		.platRestau {
+			text-align: center;
+			margin: 30px 0;
+		}
+		.platRestau .ajouePlat {
+			width: 20%;
+			font-family: roboto;
+			background-color: lightgreen;
+			border-radius: 5px;
+			border: 1px solid lightgreen;
+			font-size: 18px;
+			padding: 10px;
+
+		}
+
+		.btnDelete a {
+			text-decoration: none;
+			color: white;
+		}
+		.btnEdit a {
+			text-decoration: none;
+			color: white;
+		}
+		.ajouePlat a {
+			text-decoration: none;
+			color: black;
+		}
+	</style>
+		<style>
 		.pannel-restaurant {
 			width: fit-content;
 			margin: 2em auto auto;
@@ -238,185 +375,5 @@
 			{% endif %}
 		</section>
 	</main>
-=======
 
-
-	<h1 class="compteRestaurateur">Mon compte</h1>
-
-	<div class="monCompte">
-		<h2>{{restaurant.raisonSociale}}</h2>
-		<h3>Adresse</h3>
-		<p>{{restaurant.rue}}</p>
-		<p>{{restaurant.complement}}</p>
-		<p>{{restaurant.codePostal}}
-			{{restaurant.ville}}</p>
-		<p>{{restaurant.telephone}}</p>
-		<button>
-			<a href="{{ path('restaurant_edit', {'id': restaurant.id}) }}">Modifier mes infos</a>
-		</button>
-	</div>
-
-	<div class="platRestau">
-		<h3>Liste des plats :</h3>
-
-		<ul class="restaurateur">
-			{% for plat in restaurant.plats %}
-				<li class="unRestau">
-					<div class="vitrine"><img src="{{asset("images/plat/"~ plat.photo)}}" alt=""></div>
-					<div class="infoPlatRestau">
-						<div class="detail">
-							<span class="titleRestau">Nom :
-								{{plat.nom}}</span>
-							<span class="titleRestau">Prix :
-								{{plat.prix / 100}}</span>
-							<span class="titleRestau">Stock :
-								{{plat.stock}}</span>
-						</div>
-						<div class="editDelete">
-							{{ include('plat/_delete_form.html.twig') }}
-							<button class="btnEdit">
-								<a href="{{ path('plat_edit', {'id': plat.id}) }}">Modifier</a>
-							</button>
-						</div>
-					</div>
-				</li>
-			{% endfor %}
-		</ul>
-		<button class="ajouePlat">
-			<a href="{{path('plat_new')}}">Ajouter un plat</a>
-		</button>
-	</div>
-
-
-	<style>
-		.compteRestaurateur {
-			font-family: roboto;
-			margin-left: 100px;
-			margin-top: 30px;
-			text-decoration: underline;
-		}
-		.monCompte {
-			margin: 30px auto;
-			width: 800px;
-			display: flex;
-			align-items: center;
-			flex-direction: column;
-			font-family: roboto;
-
-		}
-		.monCompte h2 {
-			margin: 10px 0;
-		}
-		.monCompte button {
-			background-color: #acace7;
-			border: none;
-			border-radius: 7px;
-			padding: 15px;
-			margin-top: 10px;
-
-		}
-		.monCompte button a {
-			text-decoration: none;
-			color: white;
-			font-size: 16px;
-		}
-
-		.platRestau h3 {
-			font-family: roboto;
-			font-size: 25px;
-		}
-		.restaurateur {
-			width: 80%;
-			margin: 30px auto;
-			display: flex;
-			justify-content: space-evenly;
-		}
-		.restaurateur img {
-			width: 100%;
-			height: 100%;
-		}
-		.unRestau {
-			list-style-type: none;
-			height: 400px;
-			width: 30%;
-			border: 2px solid black;
-			border-radius: 15px;
-		}
-		.infoPlatRestau {
-			display: flex;
-			justify-content: space-evenly;
-		}
-		.vitrine {
-			width: 95%;
-			height: 65%;
-			margin: 2% auto;
-		}
-		.detail {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			align-content: center;
-			margin: 5px;
-		}
-		.editDelete {
-			width: 200px;
-		}
-		.titleRestau {
-			margin: 5px;
-			font-size: 17px;
-			font-family: roboto;
-			font-weight: 600;
-		}
-		.restaurateur .btnDelete {
-			width: 85%;
-			font-family: roboto;
-			background-color: red;
-			border-radius: 5px;
-			border: 1px solid red;
-			font-size: 18px;
-			padding: 10px;
-			cursor: pointer;
-			color: white;
-		}
-		.restaurateur .btnEdit {
-			width: 85%;
-			font-family: roboto;
-			background-color: orange;
-			border-radius: 5px;
-			border: 1px solid orange;
-			font-size: 18px;
-			padding: 10px;
-			margin: 10px 0;
-
-		}
-		.platRestau {
-			text-align: center;
-			margin: 30px 0;
-		}
-		.platRestau .ajouePlat {
-			width: 20%;
-			font-family: roboto;
-			background-color: lightgreen;
-			border-radius: 5px;
-			border: 1px solid lightgreen;
-			font-size: 18px;
-			padding: 10px;
-
-		}
-
-		.btnDelete a {
-			text-decoration: none;
-			color: white;
-		}
-		.btnEdit a {
-			text-decoration: none;
-			color: white;
-		}
-		.ajouePlat a {
-			text-decoration: none;
-			color: black;
-		}
-	</style>
-
->>>>>>> Stashed changes
 {% endblock %}
