@@ -38,7 +38,7 @@
 				</thead>
 				<tbody>
 					{% for commande in client.commandes %}
-						{% if commande.statut != 'livrée'%}
+						{% if commande.statut.nom != 'livrée'%}
 							<tr>
 								<td>{{commande.numero}}</td>
 								<td>{{commande.restaurant.raisonSociale}}</td>
@@ -63,12 +63,12 @@
 					<th>Numero</th>
 					<th>Nom</th>
 					<th>Montant</th>
-					<th>Horraire</th>
+					<th>Horaires</th>
 					<th></th>
 				</thead>
 				<tbody>
 					{% for commande in client.commandes %}
-						{% if commande.statut == 'livrée'%}
+						{% if commande.statut.nom == 'livrée'%}
 							<tr>
 								<td>{{commande.numero}}</td>
 								<td>{{commande.restaurant.raisonSociale}}</td>
