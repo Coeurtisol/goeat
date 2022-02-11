@@ -1,88 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Plat{% endblock %}
+{% block title %}Plat
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/plat-show.css') }}">
+{% endblock %}
 
 {% block body %}
-<style>
 
-.plat {
-     width: 50%!important;
-    display: flex;
-    height: 500px;
-    margin: 50px auto;
-    align-items: center;
-    font-family: cursive;
-    justify-content: center;
-    flex-direction: column;
-}
+	<fieldset class="plat">
 
-.plat .imagePlat {
-        height: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
+		<div class="imagePlat">
+			<img src="{{asset("images/plat/"~ plat.photo)}}">
+		</div>
 
-.plat .textePlat {
-       height: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
+		<div class="textePlat">
+			<span class="nom">{{ plat.nom }}</span>
+			<span class="description">
+				{{plat.description}}</span>
+			<span class="prix">{{plat.prix / 100}}
+				€</span>
 
-.plat .imagePlat img {
-    height: 90%;
-    border-radius: 14%;
-}
+			<a href="{{ path('ajouter_plat',{'id': plat.id}) }}">
+				Commander
+			</a>
 
-.plat .nom {
-    font-weight: bold; 
-    text-transform: uppercase; 
-}
+		</div>
+
+	</fieldset>
 
 
-.plat .prix {
-    font-weight: bold; 
-}
-
-.plat a {
-        border: 1px black solid;
-    background-color: #acace7;
-    color: black;
-    text-decoration: none;
-    text-transform: uppercase;
-    padding: 4%;
-    margin: 10px auto 0;
-    border-radius: 5%;
-}
-
-</style>
-    
-
-   
-   <fieldset class="plat">
-
-   <div class="imagePlat">
-     <img src="{{asset("images/plat/"~ plat.photo)}}">
-    </div>
-    
-    <div class="textePlat">
-    <span class="nom">{{ plat.nom }}</span>
-    <span class="description"> {{plat.description}}</span>
-    <span class="prix">{{plat.prix / 100}} €</span>
-    
- <a href="{{ path('ajouter_plat',{'id': plat.id}) }}">
- Commander
- </a>
-
-    </div>
-
-    </fieldset>
-
-
-
-
-    
 {% endblock %}

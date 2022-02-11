@@ -1,0 +1,23 @@
+.livreur-form {
+    margin: 2em auto 0;
+    width: fit-content;
+}
+.livreur-form h1 {
+    color: black;
+    text-align: center;
+}
+.livreur-form form {
+    margin-top: 2em;
+}
+.livreur-form div {
+    margin-top: 0.5em;
+}
+.livreur-form label {
+    display: inline-block;
+    width: 100px;
+}
+.livreur-form input,
+.livreur-form select,
+.livreur-form option {
+    padding: 0.5em;
+}

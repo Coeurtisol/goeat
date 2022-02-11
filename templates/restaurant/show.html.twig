@@ -3,24 +3,41 @@
 {% block title %}Restaurant
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/restaurant_show.css') }}">
+{% endblock %}
+
 {% block body %}
-	<h1>{{restaurant.raisonSociale}}</h1>
 
-	<h3>Adresse</h3>
-	<p>{{restaurant.rue}}</p>
-	{% if restaurant.complement %}
-		<p>{{restaurant.complement}}</p>
-	{% endif %}
-	<p>{{restaurant.ville}}</p>
+	<div class="info">
+		<h1>{{restaurant.raisonSociale}}</h1>
 
-	{% for plat in restaurant.plats %}
-		<div>
-			<a href="{{path('plat_show',{'id': plat.id})}}">
-				<p>{{plat.nom}}</p>
-				<img src="{{ asset("images/plat/"~ plat.photo)}}">
-				<p>{{plat.description}}</p>
-				<p>{{plat.prix / 100}}</p>
-			</a>
-		</div>
-	{% endfor %}
+		<h3>Adresse</h3>
+		<p>{{restaurant.rue}}</p>
+		{% if restaurant.complement %}
+			<p>{{restaurant.complement}}</p>
+		{% endif %}
+		<p>{{restaurant.ville}}</p>
+	</div>
+
+	<ul class="card-list">
+		{% for plat in restaurant.plats %}
+			<li class="card">
+				<div class="vitrine"><img src="{{asset("images/plat/"~ plat.photo)}}" alt=""></div>
+				<div class="card-info">
+					<div class="card-detail">
+						<span class="card-title">Nom :
+							{{plat.nom}}</span>
+						<span class="card-title">Prix :
+							{{plat.prix / 100}}</span>
+					</div>
+				</div>
+				<div class="card-info">
+					<button class="btnEdit">
+						<a href="{{path('plat_show',{'id': plat.id})}}">Voir</a>
+					</button>
+				</div>
+			</li>
+		{% endfor %}
+	</ul>
 {% endblock %}

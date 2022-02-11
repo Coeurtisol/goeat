@@ -3,7 +3,7 @@
 {% block title %}Plat index{% endblock %}
 
 {% block body %}
-    <h1>Plat index</h1>
+    <h1>Les plats</h1>
 
     <table class="table">
         <thead>
@@ -27,8 +27,8 @@
                 <td>{{ plat.description }}</td>
                 <td>{{ plat.photo }}</td>
                 <td>
-                    <a href="{{ path('plat_show', {'id': plat.id}) }}">show</a>
-                    <a href="{{ path('plat_edit', {'id': plat.id}) }}">edit</a>
+                  <button><a href="{{ path('plat_show', {'id': plat.id}) }}">Voir</a></button> 
+                   <button><a href="{{ path('plat_edit', {'id': plat.id}) }}">Modifier</a></button>
                 </td>
             </tr>
         {% else %}
@@ -39,5 +39,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('plat_new') }}">Create new</a>
+   <button> <a href="{{ path('plat_new') }}">Crée un nouveau plat</a></button>
 {% endblock %}

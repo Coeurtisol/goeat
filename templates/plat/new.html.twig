@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Plat{% endblock %}
+{% block title %}Ajouter Plat{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form/form.css') }}">
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Plat</h1>
 
     {{ include('plat/_form.html.twig') }}
 
-    <a href="{{ path('plat_index') }}">back to list</a>
 {% endblock %}

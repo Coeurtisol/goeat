@@ -8,6 +8,7 @@ use App\Form\PlatType;
 use App\Repository\PlatRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,6 +29,7 @@ class PlatController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_RESTAURATEUR")
      * @Route("/new", name="plat_new", methods={"GET", "POST"})
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -47,7 +49,7 @@ class PlatController extends AbstractController
             $entityManager->persist($plat);
             $entityManager->flush();
 
-            return $this->redirectToRoute('plat_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('restaurant_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('plat/new.html.twig', [
@@ -67,6 +69,7 @@ class PlatController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_RESTAURATEUR")
      * @Route("/{id}/edit", name="plat_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Plat $plat, EntityManagerInterface $entityManager): Response
@@ -75,9 +78,13 @@ class PlatController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['photo']->getData();
+            $file->move($this->getParameter('plat_image'),$file->getClientOriginalName());
+
+            $plat->setPhoto($file->getClientOriginalName());
             $entityManager->flush();
 
-            return $this->redirectToRoute('plat_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('restaurant_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('plat/edit.html.twig', [
@@ -87,6 +94,7 @@ class PlatController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_RESTAURATEUR")
      * @Route("/{id}", name="plat_delete", methods={"POST"})
      */
     public function delete(Request $request, Plat $plat, EntityManagerInterface $entityManager): Response
@@ -96,6 +104,6 @@ class PlatController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('plat_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('restaurant_index', [], Response::HTTP_SEE_OTHER);
     }
 }

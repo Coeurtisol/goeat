@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Commande{% endblock %}
+{% block title %}New Commande
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form/form.css') }}">
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Commande</h1>
-    
-    {{ include('commande/_form.html.twig') }}
 
-    <a href="{{ path('commande_index') }}">back to list</a>
+	{{ include('commande/_form.html.twig') }}
+
 {% endblock %}

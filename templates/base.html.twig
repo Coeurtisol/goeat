@@ -12,93 +12,22 @@
 		{% block stylesheets %}
 			{# {{ encore_entry_link_tags('app') }} #}
 		{% endblock %}
+		<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
 		{% block javascripts %}
 			{# {{ encore_entry_script_tags('app') }} #}
 		{% endblock %}
 	</head>
-	<style>
-		* {
-			box-sizing: border-box;
-			margin: 0;
-			padding: 0;
-
-		}
-		.logo {
-			    color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    margin-left: 5%;
-}
-		
-		header {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			background-color: #24252A;
-			font-family: roboto, sans serif;
-		}
-		.navbar a {
-			font-weight: 500;
-			font-size: 16px;
-			color: #edf0f1;
-			text-decoration: none;
-		}
-		.navbar button {
-			font-weight: 500;
-			font-size: 16px;
-			color: #edf0f1;
-			text-decoration: none;
-		}
-
-		.nav_links li {
-			display: inline-block;
-			padding: 0 20px;
-		}
-		.nav_links li a {
-			transition: all 0.3s ease 0s;
-		}
-		.nav_links li a:hover {
-			color: #0088a9
-		}
-		.navbar button {
-			padding: 9px 25px;
-			background-color: #acace7;
-			border: none;
-			border-radius: 50px;
-			cursor: pointer;
-			transition: all 0.3s ease 0s;
-		}
-		.navbar button:hover {
-			background-color: #acace7;
-		}
-
-		.logoImage {
-		    height: 100px;
-    display: flex;
-    align-items: center;
-		}
-
-		.logoImage img {
-		height: 100%;
-		}
-
-	</style>
 	<body>
 		{% block nav %}
 			<header class="navbar">
-		
-				<h1 class="logo" href="{{path('home')}}">Go Eat<div class="logoImage">
-			<img src="{{asset("images/logo.PNG")}}"></div></h1>
-					
-				<nav>
-					<ul class="nav_links">
-						<li>
-							<a href="{{path('home')}}">Nos plats</a>
-						</li>
-					</ul>
-				</nav>
+
+				<a  class="title-logo" href="{{path('home')}}">
+					<h1 class="logo">Go Eat<div class="logoImage">
+							<img src="{{asset("images/logo.PNG")}}"></div>
+					</h1>
+				</a>
+
 				<div>
 
 					{% if app.user %}

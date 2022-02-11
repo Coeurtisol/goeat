@@ -1,4 +1,27 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="form">
+	<h1>Entrer l'adresse de livraison</h1>
+	{{ form_start(form) }}
+
+	<div>
+		{{ form_label(form.rue, "Rue :")}}
+		{{ form_widget(form.rue)}}
+	</div>
+
+	<div>
+		{{ form_label(form.complement, "Complement :")}}
+		{{ form_widget(form.complement)}}
+	</div>
+	<div>
+		{{ form_label(form.code_postal, "Code postal :")}}
+		{{ form_widget(form.code_postal)}}
+	</div>
+	<div>
+		{{ form_label(form.ville, "Ville :")}}
+		{{ form_widget(form.ville)}}
+	</div>
+
+	<button class="btn" type="submit">{{ button_label|default('Valider') }}</button>
+
+
+	{{ form_end(form) }}
+</div>

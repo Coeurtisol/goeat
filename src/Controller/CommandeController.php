@@ -11,12 +11,14 @@ use App\Repository\RestaurantRepository;
 use App\Repository\StatutCommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
+ * @IsGranted("ROLE_USER")
  * @Route("/commande")
  */
 class CommandeController extends AbstractController
@@ -32,7 +34,7 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="commande_new", methods={"GET", "POST"})
+     * @Route("/valider", name="commande_new", methods={"GET", "POST"})
      */
     public function new(Request $request, EntityManagerInterface $entityManager, SessionInterface $session, PlatRepository $platRepository, RestaurantRepository $restaurantRepository, StatutCommandeRepository $statutRepository): Response
     {
@@ -53,7 +55,7 @@ class CommandeController extends AbstractController
             ];
         }
 
-        $total=0;
+        $total=300;
 
         foreach ($panierWhithData as $item) {
             $totalByPlat=$item['plat']->getPrix() * $item['quantite'];
@@ -63,9 +65,10 @@ class CommandeController extends AbstractController
         $form = $this->createForm(CommandeType::class, $commande);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $restaurant = $restaurantRepository->find($panierWhithData[0]['plat']->getRestaurant()->getId());
+        
+        if ($form->isSubmitted() && $form->isValid() && $form->getData()->getVille() == $restaurant->getVille()) {
             $client = $this->getUser()->getClient();
-            $restaurant = $restaurantRepository->find($panierWhithData[0]['plat']->getRestaurant()->getId());
             $commande->setNumero(rand(0, 1000000));
             $commande->setMontant($total);
             $commande->setClient($client);

@@ -1,4 +1,31 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="form">
+	<h1>Informations plat</h1>
+	{{ form_start(form) }}
+
+	<div>
+		{{ form_label(form.nom, "Nom :")}}
+		{{ form_widget(form.nom)}}
+	</div>
+
+	<div>
+		{{ form_label(form.prix, "Prix :")}}
+		{{ form_widget(form.prix)}}
+	</div>
+	<div>
+		{{ form_label(form.stock, "Stock :")}}
+		{{ form_widget(form.stock)}}
+	</div>
+	<div>
+		{{ form_label(form.description, "description :")}}
+		{{ form_widget(form.description)}}
+	</div>
+	<div>
+		{{ form_label(form.photo, "photo :")}}
+		{{ form_widget(form.photo)}}
+	</div>
+
+	<button class="btn" type="submit">{{ button_label|default('Enregistrer') }}</button>
+
+
+	{{ form_end(form) }}
+</div>

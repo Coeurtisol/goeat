@@ -1,4 +1,36 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="restaurant-form">
+	{{ form_start(form) }}
+
+	<div>
+		{{ form_label(form.raisonSociale, "raisonSociale :")}}
+		{{ form_widget(form.raisonSociale)}}
+	</div>
+
+	<div>
+		{{ form_label(form.rue, "rue :")}}
+		{{ form_widget(form.rue)}}
+	</div>
+	<div>
+		{{ form_label(form.ville, "ville :")}}
+		{{ form_widget(form.ville)}}
+	</div>
+	<div>
+		{{ form_label(form.codePostal, "codePostal :")}}
+		{{ form_widget(form.codePostal)}}
+	</div>
+	<div>
+		{{ form_label(form.complement, "complement :")}}
+		{{ form_widget(form.complement)}}
+	</div>
+	<div>
+		{{ form_label(form.telephone, "telephone :")}}
+		{{ form_widget(form.telephone)}}
+	</div>
+	<div>
+		{{ form_label(form.type, "type :")}}
+		{{ form_widget(form.type)}}
+	</div>
+
+	<button class="btn" type="submit">{{ button_label|default('Save') }}</button>
+	{{ form_end(form) }}
+</div>

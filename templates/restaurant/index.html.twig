@@ -3,74 +3,59 @@
 {% block title %}Restaurant index
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/index-restaurant.css') }}">
+{% endblock %}
+
 {% block body %}
-	<h1>Mon compte</h1>
 
-	<h2>{{restaurant.raisonSociale}}</h2>
-	<h3>Adresse</h3>
-	<p>{{restaurant.rue}}</p>
-	<p>{{restaurant.complement}}</p>
-	<p>{{restaurant.codePostal}}
-		{{restaurant.ville}}</p>
-	<p>{{restaurant.telephone}}</p>
-	<button>
-		<a href="{{ path('restaurant_edit', {'id': restaurant.id}) }}">Modifier mes infos</a>
-	</button>
+	<h1 class="compteRestaurateur">Mon compte</h1>
 
-	<h3>Liste des plats</h3>
-	<table>
-		<thead>
-			<tr>
-				<th>Photo</th>
-				<th>Nom</th>
-				<th>Prix</th>
-				<th>Stock</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
+	<div class="monCompte">
+		<h2>{{restaurant.raisonSociale}}</h2>
+		<h3>Adresse</h3>
+		<p>{{restaurant.rue}}</p>
+		<p>{{restaurant.complement}}</p>
+		<p>{{restaurant.codePostal}}
+			{{restaurant.ville}}</p>
+		<p>{{restaurant.telephone}}</p>
+		<button>
+			<a href="{{ path('restaurant_edit', {'id': restaurant.id}) }}">Modifier mes infos</a>
+		</button>
+	</div>
+
+	<div class="platRestau">
+		<h3>Liste des plats :</h3>
+
+		<ul class="restaurateur">
 			{% for plat in restaurant.plats %}
-				<tr>
-					<td><img src="{{asset("images/plat/"~ plat.photo)}}" alt=""></td>
-					<td>{{plat.nom}}</td>
-					<td>{{plat.prix / 100}}</td>
-					<td>{{plat.stock}}</td>
-					<td>{{ include('plat/_delete_form.html.twig') }}
-						<a href="{{ path('plat_edit', {'id': plat.id}) }}">Modifier</a>
-					</td>
-				</tr>
+				<li class="unRestau">
+					<div class="vitrine"><img src="{{asset("images/plat/"~ plat.photo)}}" alt=""></div>
+					<div class="infoPlatRestau">
+						<div class="detail">
+							<span class="titleRestau">Nom :
+								{{plat.nom}}</span>
+							<span class="titleRestau">Prix :
+								{{plat.prix / 100}}</span>
+							<span class="titleRestau">Stock :
+								{{plat.stock}}</span>
+						</div>
+						<div class="editDelete">
+							{{ include('plat/_delete_form.html.twig') }}
+							<button class="btnEdit">
+								<a href="{{ path('plat_edit', {'id': plat.id}) }}">Modifier</a>
+							</button>
+						</div>
+					</div>
+				</li>
 			{% endfor %}
-		</tbody>
-	</table>
-	<style>
-		.pannel-restaurant {
-			width: fit-content;
-			margin: 2em auto auto;
-		}
-		.pannel-restaurant h2,
-		.pannel-restaurant h3 {
-			color: black;
-		}
-		.pannel-restaurant h2 {
-			text-align: center;
-			margin: 1em 0;
-		}
-		.pannel-restaurant h3 {
-			margin-bottom: 0.5em;
-		}
-		.pannel-restaurant section {
-			margin-top: 2em;
-		}
-		.pannel-restaurant table {
-			border-collapse: collapse;
-		}
-		.pannel-restaurant th,
-		.pannel-restaurant td {
-			border: 1px solid black;
-			padding: 0.5em;
-		}
-	</style>
-	<main class="pannel-restaurant">
+		</ul>
+		<button class="ajouePlat">
+			<a href="{{path('plat_new')}}">Ajouter un plat</a>
+		</button>
+	</div>
+
+	<div class="pannel-restaurant">
 		<h2>Commandes</h2>
 		{# COMMANDES EN ATTENTE #}
 		<section>
@@ -236,5 +221,6 @@
 				<p>Aucune commande livrées.</p>
 			{% endif %}
 		</section>
-	</main>
+	</div>
+
 {% endblock %}
