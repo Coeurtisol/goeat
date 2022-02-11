@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Api\VilleApi;
 use App\Entity\Commande;
 use App\Entity\LigneCommande;
 use App\Form\CommandeType;
@@ -39,6 +40,7 @@ class CommandeController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, SessionInterface $session, PlatRepository $platRepository, RestaurantRepository $restaurantRepository, StatutCommandeRepository $statutRepository): Response
     {
         $client = $this->getUser()->getClient();
+        $villes = VilleApi::getVilles();
         $commande = new Commande();
 
         if(!$session->has('panier'))
@@ -98,6 +100,7 @@ class CommandeController extends AbstractController
             'commande' => $commande,
             'form' => $form,
             'client' => $client,
+            'villes' =>$villes
         ]);
     }
 
@@ -108,26 +111,6 @@ class CommandeController extends AbstractController
     {
         return $this->render('commande/show.html.twig', [
             'commande' => $commande,
-        ]);
-    }
-
-    /**
-     * @Route("/{id<\d+>}/edit", name="commande_edit", methods={"GET", "POST"})
-     */
-    public function edit(Request $request, Commande $commande, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(CommandeType::class, $commande);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('commande_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('commande/edit.html.twig', [
-            'commande' => $commande,
-            'form' => $form,
         ]);
     }
 

@@ -18,6 +18,11 @@
 	<div>
 		{{ form_label(form.ville, "Ville :")}}
 		{{ form_widget(form.ville, {'attr':{'value':client.ville}})}}
+		<datalist id="listeville">
+		{% for ville in villes %}
+			<option value="{{ville.nom}}">{{ville.nom}}</option>
+		{% endfor %}
+	</datalist>
 	</div>
 
 	<button class="btn" type="submit">{{ button_label|default('Valider') }}</button>

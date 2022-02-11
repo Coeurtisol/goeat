@@ -15,7 +15,9 @@ class CommandeType extends AbstractType
             ->add('rue')
             ->add('complement')
             ->add('code_postal')
-            ->add('ville')
+            ->add('ville', null, [
+                'attr' => ['list' => 'listeville']
+            ])
         ;
     }
 
