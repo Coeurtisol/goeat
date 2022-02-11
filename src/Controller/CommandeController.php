@@ -115,19 +115,6 @@ class CommandeController extends AbstractController
     }
 
     /**
-     * @Route("/{id<\d+>}", name="commande_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Commande $commande, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $commande->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($commande);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('commande_index', [], Response::HTTP_SEE_OTHER);
-    }
-
-    /**
      * @Route("/merci", name="commande_merci", methods={"GET"})
      */
     public function merci(CommandeRepository $commandeRepository): Response
