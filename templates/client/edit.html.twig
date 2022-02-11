@@ -2,17 +2,15 @@
 
 {% block title %}Edit Client{% endblock %}
 
-{% block body %}
-    <h1>Modification Client</h1>
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form/form.css') }}">
+{% endblock %}
 
-    {{ include('client/_form.html.twig', {'button_label': 'Update'}) }}
+{% block body %}
+    {{ include('client/_form.html.twig', {'button_label': 'Valider'}) }}
     <datalist id="listeville">
 		{% for ville in villes %}
 			<option value="{{ville.nom}}">{{ville.nom}}</option>
 		{% endfor %}
 	</datalist>
-
-    <a href="{{ path('client_index') }}">Retour à la liste</a>
-
-    {{ include('client/_delete_form.html.twig') }}
 {% endblock %}
