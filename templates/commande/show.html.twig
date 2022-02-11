@@ -1,42 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Commande{% endblock %}
+{% block title %}Commande
+{% endblock %}
 
 {% block body %}
-    <h1>Detail Commande: {{commande.numero}}</h1>
 
-    <div>
-        <h3>Adresse de livraison</h3>
-        <p>{{commande.rue}}</p>
-        {% if commande.complement %}
-        <p>{{commande.complement}}</p>        
-        {% endif %}
-        <p>{{commande.codePostal}}</p>
-        <p>{{commande.ville}}</p>
-    </div>
 
-    <div>
-        <h3>Composition de la commande</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Photo</th>
-                    <th>Nom</th>
-                    <th>Prix</th>
-                    <th>Quantité</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for ligneCommande in commande.ligneCommandes %}
-                    <tr>
-                        <td><img src="{{asset("images/plat/"~ ligneCommande.plat.photo)}}" alt=""></td>
-                        <td>{{ligneCommande.plat.nom}}</td>
-                        <td>{{ligneCommande.plat.prix / 100}}</td>
-                        <td>{{ligneCommande.quantite}}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+	<h1 class="detailCommande-client">Detail Commande:
+		{{commande.numero}}</h1>
+
+	<div class="adresseLivraison-client">
+		<h3>Adresse de livraison</h3>
+		<p>{{commande.rue}}</p>
+		{% if commande.complement %}
+			<p>{{commande.complement}}</p>
+		{% endif %}
+		<p>{{commande.codePostal}}</p>
+		<p>{{commande.ville}}</p>
+	</div>
+
+	<div class="compositonCommande-client">
+		<section>
+			<h3>Composition de la commande</h3>
+			<table>
+				<thead>
+					<th>Photo</th>
+					<th>Nom</th>
+					<th>Prix</th>
+					<th>Quantité</th>
+				</thead>
+				<tbody>
+					{% for ligneCommande in commande.ligneCommandes %}
+						<tr>
+							<td><img src="{{asset("images/plat/"~ ligneCommande.plat.photo)}}" alt=""></td>
+							<td>{{ligneCommande.plat.nom}}</td>
+							<td>{{ligneCommande.plat.prix / 100}}</td>
+							<td>{{ligneCommande.quantite}}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</section>
+	</div>
 
 {% endblock %}
