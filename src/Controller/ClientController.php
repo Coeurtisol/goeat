@@ -82,17 +82,4 @@ class ClientController extends AbstractController
             'villes' => $villes,
         ]);
     }
-
-    /**
-     * @Route("/{id}", name="client_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Client $client, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $client->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($client);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('client_index', [], Response::HTTP_SEE_OTHER);
-    }
 }
