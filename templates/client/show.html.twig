@@ -3,66 +3,11 @@
 {% block title %}Client
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/client-show.css') }}">
+{% endblock %}
+
 {% block body %}
-	<style>
-		.compte-client {
-			font-family: roboto;
-			margin-left: 100px;
-			margin-top: 30px;
-			text-decoration: underline;
-		}
-		.monCompte-client {
-			margin: 30px auto;
-			width: 800px;
-			display: flex;
-			align-items: center;
-			flex-direction: column;
-			font-family: roboto;
-
-		}
-		.monCompte-client h2 {
-			margin: 10px 0;
-		}
-		.monCompte-client button {
-			background-color: #acace7;
-			border: none;
-			border-radius: 7px;
-			padding: 15px;
-			margin-top: 10px;
-
-		}
-		.monCompte-client button a {
-			text-decoration: none;
-			color: white;
-			font-size: 16px;
-		}
-		.pannel-client {
-			width: fit-content;
-			margin: 2em auto;
-		}
-		.pannel-client h2,
-		.pannel-client h3 {
-			color: black;
-		}
-		.pannel-client h2 {
-			text-align: center;
-			margin: 1em 0;
-		}
-		.pannel-client h3 {
-			margin-bottom: 0.5em;
-		}
-		.pannel-client table {
-			border-collapse: collapse;
-		}
-		.pannel-client th,
-		.pannel-client td {
-			border: 1px solid black;
-			padding: 0.5em;
-		}
-        	.pannel-client section {
-			margin: 30px auto;
-		}
-	</style>
 
 	<h1 class="compte-client">Mon compte</h1>
 
