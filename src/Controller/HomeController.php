@@ -14,8 +14,15 @@ class HomeController extends AbstractController
      */
     public function index(RestaurantRepository $restaurantRepository): Response
     {
+        if($this->getUser() && $this->getUser()->getClient()){
+            $secteurClient =$this->getUser()->getClient()->getVille();
+            $restaurants=$restaurantRepository->findBy(array('ville'=>$secteurClient));
+        }else {
+            $restaurants=$restaurantRepository->findAll();
+        }
+
         return $this->render('home/index.html.twig', [
-            'restaurants' => $restaurantRepository->findAll(),
+            'restaurants' => $restaurants,
         ]);
     }
 

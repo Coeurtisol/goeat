@@ -8,6 +8,6 @@
 
 {% block body %}
 
-	{{ include('commande/_form.html.twig') }}
+	{{ include('commande/_form.html.twig', {'client': client}) }}
 
 {% endblock %}
