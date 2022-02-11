@@ -24,6 +24,11 @@ class ClientController extends AbstractController
      */
     public function index(ClientRepository $clientRepository): Response
     {
+        $user = $this->getUser();
+        if ($user && !$user->getClient()) {
+            return $this->redirectToRoute('client_new');
+        }
+
         $client = $clientRepository->findOneBy(array('user'=>$this->getUser()->getId()));
         return $this->render('client/show.html.twig', [
             'client' => $client,
@@ -53,16 +58,6 @@ class ClientController extends AbstractController
             'client' => $client,
             'form' => $form,
             'villes' => $villes,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="client_show", methods={"GET"})
-     */
-    public function show(Client $client): Response
-    {
-        return $this->render('client/show.html.twig', [
-            'client' => $client,
         ]);
     }
 

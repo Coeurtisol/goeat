@@ -38,6 +38,7 @@ class CommandeController extends AbstractController
      */
     public function new(Request $request, EntityManagerInterface $entityManager, SessionInterface $session, PlatRepository $platRepository, RestaurantRepository $restaurantRepository, StatutCommandeRepository $statutRepository): Response
     {
+        $client = $this->getUser()->getClient();
         $commande = new Commande();
 
         if(!$session->has('panier'))
@@ -68,7 +69,6 @@ class CommandeController extends AbstractController
         $restaurant = $restaurantRepository->find($panierWhithData[0]['plat']->getRestaurant()->getId());
         
         if ($form->isSubmitted() && $form->isValid() && $form->getData()->getVille() == $restaurant->getVille()) {
-            $client = $this->getUser()->getClient();
             $commande->setNumero(rand(0, 1000000));
             $commande->setMontant($total);
             $commande->setClient($client);
@@ -97,6 +97,7 @@ class CommandeController extends AbstractController
         return $this->renderForm('commande/new.html.twig', [
             'commande' => $commande,
             'form' => $form,
+            'client' => $client,
         ]);
     }
 
