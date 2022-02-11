@@ -1,4 +1,37 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="client-form">
+	{{ form_start(form) }}
+
+	<div>
+		{{ form_label(form.nom, "Nom :")}}
+		{{ form_widget(form.nom)}}
+	</div>
+
+	<div>
+		{{ form_label(form.prenom, "Prénom :")}}
+		{{ form_widget(form.prenom)}}
+	</div>
+
+	<div>
+		{{ form_label(form.rue, "Rue :")}}
+		{{ form_widget(form.rue)}}
+	</div>
+	<div>
+		{{ form_label(form.complement, "Complément :")}}
+		{{ form_widget(form.complement)}}
+	</div>
+    	<div>
+		{{ form_label(form.ville, "Ville :")}}
+		{{ form_widget(form.ville)}}
+	</div>
+    	<div>
+		{{ form_label(form.telephone, "Telephone :")}}
+		{{ form_widget(form.telephone)}}
+	</div>
+     	<div>
+		{{ form_label(form.codePostal, "Code postal :")}}
+		{{ form_widget(form.codePostal)}}
+	</div>
+
+	{# {{ form_widget(form) }} #}
+	<button class="btn">{{ button_label|default('Save') }}</button>
+	{{ form_end(form) }}

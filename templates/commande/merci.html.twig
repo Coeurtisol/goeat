@@ -1,11 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Commande index{% endblock %}
+{% block title %}Commande index
+{% endblock %}
 
 {% block body %}
+	<div class="commande-merci">
+		<h2>Merci pour votre commande</h2>
+		<p>Vous pouvez suivre l'état de votre commande dans votre compte ou en cliquant sur le bouton en-dessous</p>
+		<button>
+			<a href="{{path('client_index')}}">Voir ma commande</a>
+		</button>
+	</div>
 
-    <h2>Merci pour votre commande</h2>
-    <p>Vous pouvez suivre l'état de votre commande dans votre compte ou en cliquant sur le bouton en-dessous</p>
-    <button><a href="{{path('client_index')}}">Voir ma commande</a></button>
+	<style>
+		.commande-merci {
+			width: 800px;
+			margin: 50px auto;
+			text-align: center;
+		}
+		.commande-merci h2 {
+			margin: 10px;
+		}
+		.commande-merci p {
+			margin: 10px;
+		}
+		.commande-merci button {
+			padding: 10px;
+			background-color: #acace7;
+			border: 2px solid #acace7;
+			border-radius: 10px;
+		}
+		.commande-merci button a {
+			text-decoration: none;
+			color: white;
+		}
+	</style>
 
 {% endblock %}
